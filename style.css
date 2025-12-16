@@ -7,7 +7,7 @@ body {
 .editor {
     width: 600px;
     height: 700px;
-    background-color: rgb(36, 36, 36);
+    background-color: rgb(39, 39, 39);
     border-style: solid;
     border-color: black;
     border-width: 1px;
@@ -25,11 +25,14 @@ body {
     left: 0px;
     width: 20px;
     height: fit-content;
-    background-color: rgb(58, 58, 58);
-    color: lightgray;
+    background-color: rgb(39, 39, 39);
+    color: rgb(154, 152, 152);
     font-family: arial;
     font-size: 14px;
     user-select: none;
+    border-style: solid;
+    border-color: rgb(60, 60, 60);
+    border-width: 0px  1px 0px 0px;
 }
 
 .HTMLEditorIndexsBackground {
@@ -46,6 +49,7 @@ body {
     padding: 0px;
 }
 
+
 #HTMLEditorPlaceholder {
     position: absolute;
     top: -12px;
@@ -53,6 +57,11 @@ body {
     color: rgb(136, 135, 135);
     font-family: monospace;
     font-size: 12px;
+}
+
+.editor pre {
+    margin: 0px;
+    padding: 0px;
 }
 
 .editor pre {

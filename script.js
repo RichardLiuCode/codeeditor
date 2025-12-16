@@ -1,47 +1,40 @@
 // HTML Editor
-
 setInterval(function () {
-    let HTMLEditor = {
-        splitLines: document.getElementById("htmlInput").innerText.split("\n"),
-        AllLines: 0,
-        EmptyLines: 0,
-        TextLines: 0
+    let HTMLEditorSplitLines = document.getElementById("htmlInput").innerText.split("\n");
+    if (HTMLEditorSplitLines.length > 0 && HTMLEditorSplitLines[HTMLEditorSplitLines.length - 1] === "") {
+        HTMLEditorSplitLines.pop();
     }
+    let HTMLEditorTotalLines = HTMLEditorSplitLines.length;
+
     document.getElementById("HTMLEditorIndexsDisplay").innerHTML = "";
-    for (let i = 0; i < HTMLEditor.splitLines.length; i = i + 1) {
-        if (HTMLEditor.splitLines[i] == "") {
-            HTMLEditor.EmptyLines++;
-        } else {
-            HTMLEditor.TextLines++
-        }
+    if (HTMLEditorTotalLines == 0) {
+        HTMLEditorTotalLines = 1;
     }
-    HTMLEditor.EmptyLines = HTMLEditor.EmptyLines / 2
-    HTMLEditor.AllLines = HTMLEditor.TextLines + HTMLEditor.EmptyLines
-    if (HTMLEditor.AllLines != Math.round(HTMLEditor.AllLines)) {
-        HTMLEditor.AllLines = HTMLEditor.AllLines.toFixed(0);
-        HTMLEditor.AllLines = HTMLEditor.AllLines - 1;
-    }
-    if (HTMLEditor.AllLines == 0) {
-        HTMLEditor.AllLines = 1;
-    }
-    for (let i = 1; i < HTMLEditor.AllLines + 1; i = i + 1) {
+    for (let i = 1; i < HTMLEditorTotalLines + 1; i = i + 1) {
         let HTMLindexNumber = document.createElement("div");
         HTMLindexNumber.style = "font-size: 10px;margin:0px;margin-left:1px;padding:0px;"
         HTMLindexNumber.innerHTML = i;
         document.getElementById("HTMLEditorIndexsDisplay").appendChild(HTMLindexNumber);
     }
+
     if (document.getElementById("htmlInput").textContent == "") {
         document.getElementById("HTMLEditorPlaceholder").style.display = "revert";
     } else {
         document.getElementById("HTMLEditorPlaceholder").style.display = "none";
     }
-}, 200);
+}, 100);
 
 document.getElementById("HTMLEditor").addEventListener("keydown", function (e) {
     if ((e.key == "F") && (e.shiftKey) && (e.altKey)) {
-        document.getElementById("htmlInput").innerText = html_beautify(document.getElementById("htmlInput").innerText);
+        let UnbeautifyedHTML = document.getElementById("htmlInput").innerText;
+        document.getElementById("htmlInput").innerText = html_beautify(UnbeautifyedHTML)
     }
 })
+document.getElementById("htmlInput").addEventListener("paste", function (e) {
+    e.preventDefault();
+    alert("pasted");
+});
+
 document.getElementById("htmlInput").addEventListener("input", function (e) {
     let HTMLEDITORInsertSymbolList = [
         { "input": "(", "insert": ")" },
