@@ -1,0 +1,99 @@
+body {
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#codespaceContainer {
+    margin: 0px;
+    margin-top: 60px;
+    margin-left: 0px;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 100px);
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+}
+
+#editors {
+    position: relative;
+    width: 500px;
+    height: 100%;
+}
+
+#htmlEditorTab,
+#cssEditorTab,
+#jsEditorTab {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 30px;
+    background-color: rgb(91, 90, 90);
+    color: white;
+    border-style: solid;
+    border-width: 0px 1px 0px 1px;
+}
+
+#htmlEditorTab {
+    left: 30px;
+}
+
+#cssEditorTab {
+    left: 110px;
+}
+
+#jsEditorTab {
+    left: 190px;
+}
+
+#HTMLeditor,
+#CSSeditor,
+#JSeditor {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+#resizeBar {
+    cursor: e-resize;
+    position: absolute;
+    top: 0px;
+    left: 500px;
+    width: 15px;
+    height: 100%;
+    background-color: aliceblue;
+    z-index: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 0px 1px 0px 1px;
+    border-color: black;
+}
+
+#resizeBar div {
+    background-color: lightgray;
+    width: 5px;
+    height: 90px;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+#preview {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    border: none;
+    z-index: 5;
+}
