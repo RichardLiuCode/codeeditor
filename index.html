@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ACE in Action</title>
+    <title>ACode edtior</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.js"
         integrity="sha512-T2otaV2NuxAJAOCoj8ijyy+eAAadZlpvdLmakrIGVFbBkthgIFqLTXd+T8Z+S+kf4V7Ib5+6f6r4D4IdS9Ey4A=="
@@ -22,11 +22,21 @@
             <div id="HTMLeditor"></div>
             <div id="CSSeditor"></div>
             <div id="JSeditor"></div>
+            <div id="codeRunningMessage">Your code is running !</div>
         </div>
         <div id="resizeBar">
             <div></div>
         </div>
-        <iframe id="preview"></iframe>
+        <div id="previewAreaWrapper">
+            <div id="previewArea">
+                <iframe id="preview"></iframe>
+                <div id="consoleWrapper">
+                    <div id="console"></div>
+                    <div id="consoleInput" contenteditable spellcheck="false"></div>
+                    <div class="consoleInputArrow">&gt</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
