@@ -14,9 +14,9 @@ fetch("../iframeTemplate.html")
     .then(function (response) {
         return response.text();
     }).then(function (html) {
-        html = html.replace("<!--|HTML|-->", HTMLeditor.getValue());
-        html = html.replace("/*--|CSS|--*/", CSSeditor.getValue());
-        html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue());
+        html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
+        html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
+        html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
         html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN)
         document.getElementById("preview").srcdoc = html
     });
@@ -175,9 +175,9 @@ function runCode() {
         .then(function (response) {
             return response.text();
         }).then(function (html) {
-            html = html.replace("<!--|HTML|-->", HTMLeditor.getValue());
-            html = html.replace("/*--|CSS|--*/", CSSeditor.getValue());
-            html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue());
+            html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
+            html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
+            html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
             html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN)
             document.getElementById("preview").srcdoc = html
         });
