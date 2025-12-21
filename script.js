@@ -10,7 +10,7 @@ window.addEventListener("resize", function () {
     document.getElementById("editors").style.width = window.innerWidth / 2 + "px";
     document.getElementById("previewAreaWrapper").style.width = (window.innerWidth / 2) - 17 + "px";
 });
-fetch("../iframeTemplate.html")
+fetch("iframeTemplate.html")
     .then(function (response) {
         return response.text();
     }).then(function (html) {
@@ -171,7 +171,7 @@ document.addEventListener("mousemove", function (e) {
 // Update code
 
 function runCode() {
-    fetch("../iframeTemplate.html")
+    fetch("iframeTemplate.html")
         .then(function (response) {
             return response.text();
         }).then(function (html) {
