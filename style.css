@@ -7,7 +7,92 @@ body {
     left: 0;
 }
 
+.topBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    background-color: rgb(110, 110, 110);
+    z-index: 3;
+
+}
+
+.torBarElementsWrapper {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    z-index: 4;
+}
+
+.torBarElementsWrapper button {
+    width: 100px;
+    height: 30px;
+    background-color: rgb(180, 178, 178);
+    z-index: 4;
+    position: absolute;
+    top: 5px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    color: black;
+    user-select: none;
+}
+
+.torBarElementsWrapper button:hover {
+    background-color: rgba(180, 178, 178, 0.874);
+}
+
+.torBarElementsWrapper button:active {
+    background-color: rgba(180, 178, 178, 0.694);
+}
+
+#topBarExportBtn {
+    position: absolute;
+    right: 5px;
+}
+
+#exportMenu {
+    position: fixed;
+    right: 5px;
+    top: 34px;
+    width: 200px;
+    height: 164px;
+    background-color: rgb(110, 110, 110);
+    z-index: 200;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    display: none;
+}
+
+#exportMenu button {
+    width: 180px;
+    height: 30px;
+    margin-left: 10px;
+    margin-top: 4px;
+    text-align: left;
+    background-color: rgb(184, 184, 184);
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    cursor: pointer;
+}
+
+#exportMenu hr {
+    width: 100%;
+    border: none;
+    background-color: black;
+    height: 1px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
 #codespaceContainer {
+
     margin: 0px;
     margin-top: 60px;
     margin-left: 0px;
@@ -37,6 +122,7 @@ body {
     color: white;
     border-style: solid;
     border-width: 0px 1px 0px 1px;
+    user-select: none;
 }
 
 #htmlEditorTab {
@@ -215,6 +301,20 @@ body {
 
 #consolepanels {
     display: none;
+}
+
+#clearConsoleButton {
+    cursor: pointer;
+    position: absolute;
+    right: 3px;
+    bottom: 2px;
+    width: 110px;
+    height: 80%;
+    font-size: 13px;
+    background-color: white;
+    border-radius: 20px;
+    border-width: 1px;
+    z-index: 8;
 }
 
 #codeRunningMessage {

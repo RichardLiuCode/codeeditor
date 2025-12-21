@@ -10,7 +10,7 @@ window.addEventListener("resize", function () {
     document.getElementById("editors").style.width = window.innerWidth / 2 + "px";
     document.getElementById("previewAreaWrapper").style.width = (window.innerWidth / 2) - 17 + "px";
 });
-fetch("iframeTemplate.html")
+fetch("templates/iframeTemplate.html")
     .then(function (response) {
         return response.text();
     }).then(function (html) {
@@ -159,8 +159,11 @@ document.addEventListener("mousemove", function (e) {
     if (isDrag) {
         let dx = e.clientX - startX;
         let newPosition = startLeft + dx;
-        if (newPosition <= 100) {
-            newPosition = 100
+        if (newPosition <= -1) {
+            newPosition = -1
+        }
+        if (newPosition >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17) {
+            newPosition = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
         }
         document.getElementById("resizeBar").style.left = newPosition + "px";
         document.getElementById("editors").style.width = newPosition + "px";
@@ -171,7 +174,7 @@ document.addEventListener("mousemove", function (e) {
 // Update code
 
 function runCode() {
-    fetch("iframeTemplate.html")
+    fetch("templates/iframeTemplate.html")
         .then(function (response) {
             return response.text();
         }).then(function (html) {
@@ -285,4 +288,79 @@ document.getElementById("openOrCloseConsoleButton").addEventListener("click", fu
         document.getElementById("consolepanels").style.display = "none";
         document.getElementById("openOrCloseConsoleButton").innerText = "Open Console";
     }
+});
+// Clear console button
+document.getElementById("clearConsoleButton").addEventListener("click", function () {
+    document.getElementById("preview").contentWindow.postMessage({
+        "type": "consoleInput",
+        "verifyID": IFRAMEACCESSTOKEN,
+        "content": "console.clear()"
+    }, "*");
+});
+
+// Export Project
+let isExportMenuDisplay = false;
+document.getElementById("topBarExportBtn").addEventListener("click", function () {
+    if (!isExportMenuDisplay) {
+        isExportMenuDisplay = true;
+        document.getElementById("exportMenu").style.display = "revert";
+        this.innerText = "Calcel";
+        this.style.borderRadius = "5px 5px 0px 0px";
+    } else {
+        isExportMenuDisplay = false;
+        document.getElementById("exportMenu").style.display = "none";
+        this.innerText = "Export";
+        this.style.borderRadius = "5px";
+    }
 })
+document.getElementById("downloadZip").addEventListener("click", function () {
+    if (HTMLeditor.getValue() && CSSeditor.getValue() && JSeditor.getValue()) {
+        let zip = new JSZip();
+        fetch("templates/downloadTemplate.html")
+            .then(function (response) {
+                return response.text()
+            })
+            .then(function (html) {
+                html = html.replace("{{ HTML }}", HTMLeditor.getValue());
+                html = html.replace("{{ Style }}", "<link rel=\"stylesheet\" href=\"style.css\">");
+                html = html.replace("{{ Script }}", "<link rel=\"stylesheet\" href=\"style.css\">");
+                zip.file("index.html", html);
+                zip.file("style.css", CSSeditor.getValue());
+
+                zip.file("script.js", JSeditor.getValue());
+                zip.generateAsync({ "type": "blob" })
+                    .then(function (content) {
+                        let downloadLink = document.createElement("a");
+                        downloadLink.href = URL.createObjectURL(content);
+                        downloadLink.download = "codeproject.zip";
+                        downloadLink.click(); URL.removeObjectURL();
+                    })
+            })
+
+
+    }
+});
+document.getElementById("downloadHTML").addEventListener("click", function () {
+    let blob = new Blob([HTMLeditor.getValue()])
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "index.html";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
+document.getElementById("downloadCSS").addEventListener("click", function () {
+    let blob = new Blob([CSSeditor.getValue()])
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "style.css";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
+document.getElementById("downloadJavaScript").addEventListener("click", function () {
+    let blob = new Blob([JSeditor.getValue()])
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "script.js";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
