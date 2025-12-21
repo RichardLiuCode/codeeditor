@@ -197,7 +197,7 @@ body {
     top: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 26px);
     border: none;
     z-index: 4;
 }
@@ -297,6 +297,7 @@ body {
     border-radius: 20px;
     border-width: 1px;
     z-index: 7;
+    user-select:none;
 }
 
 #consolepanels {
@@ -315,6 +316,7 @@ body {
     border-radius: 20px;
     border-width: 1px;
     z-index: 8;
+    user-select:none;
 }
 
 #codeRunningMessage {

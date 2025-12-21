@@ -207,11 +207,17 @@ setTimeout(function () {
 window.addEventListener("message", function (e) {
     if (e.data.verifyID == IFRAMEACCESSTOKEN && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
         if (e.data.type == "console.log") {
+            if (e.data.message.includes.IFRAMEACCESSTOKEN) {
+                e.data.message = e.data.message.replace(IFRAMEACCESSTOKEN, undefined);
+            }
             let consoleLogMessage = document.createElement("div");
             consoleLogMessage.innerHTML = e.data.message;
             consoleLogMessage.style = "padding-left:2px;width:fit-content;margin-left:2px;margin-top:1px;margin-bottom:2px;"
             document.getElementById("console").appendChild(consoleLogMessage);
         } else if (e.data.type == "console.error") {
+            if (e.data.message.includes.IFRAMEACCESSTOKEN) {
+                e.data.message = e.data.message.replace(IFRAMEACCESSTOKEN, undefined);
+            }
             let consoleLogMessage = document.createElement("div");
             consoleLogMessage.innerHTML = "<span style=\"color:white;display:flex;align-items:center;justify-content:left;\"><img src=\"icons/errorSymbol.png\" style=\"width:12px;height:12px;pointer-events:none;\">&nbsp;" + e.data.message + "</span>";
             consoleLogMessage.style = "padding-left:2px;width:90%;margin-left:2px;margin-top:1px;margin-bottom:2px;background-color:rgb(252, 167, 169);border-radius:2px;"
