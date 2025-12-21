@@ -3,17 +3,17 @@
 
 <head>
     <meta name="robots" content="noindex">
-    <meta name="iframeAccesssToken" content="--|AccessToken|--">
+    <meta name="iframeAccessToken" content="--|AccessToken|--">
     <script>
         window.addEventListener("DOMContentLoaded", function () {
             window.parent.postMessage({
                 "type": "request",
                 "loaded": true,
-                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
         })
         window.addEventListener("message", function (e) {
-            if (e.data.verifyID == document.querySelector("meta[name='iframeAccesssToken']").content && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
+            if (e.data.verifyID == document.querySelector("meta[name='iframeAccessToken']").content && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
                 if (e.data.type == "consoleInput") {
                     eval("try{" + e.data.content + "}catch(error){console.error(error);}");
                 }
@@ -23,20 +23,20 @@
             window.parent.postMessage({
                 "type": "console.log",
                 "message": message,
-                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
         }
         console.error = function (message) {
             window.parent.postMessage({
                 "type": "console.error",
                 "message": message,
-                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
         }
         console.clear = function (message) {
             window.parent.postMessage({
                 "type": "console.clear",
-                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
         }
     </script>
