@@ -2,28 +2,41 @@
 <html>
 
 <head>
-    <meta name="robots" content="noinedx">
-    <meta name="iftameAccesssToken" content="--|AccessToken|--">
+    <meta name="robots" content="noindex">
+    <meta name="iframeAccesssToken" content="--|AccessToken|--">
     <script>
         window.addEventListener("DOMContentLoaded", function () {
             window.parent.postMessage({
                 "type": "request",
                 "loaded": true,
-                "verifyID": document.querySelector("meta[name='iftameAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
             }, "*");
         })
         window.addEventListener("message", function (e) {
-            if (e.data.verifyID == document.querySelector("meta[name='iftameAccesssToken']").content && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
+            if (e.data.verifyID == document.querySelector("meta[name='iframeAccesssToken']").content && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
                 if (e.data.type == "consoleInput") {
-                    eval(e.data.content);
+                    eval("try{" + e.data.content + "}catch(error){console.error(error);}");
                 }
             }
         })
         console.log = function (message) {
             window.parent.postMessage({
-                "type": "console",
+                "type": "console.log",
                 "message": message,
-                "verifyID": document.querySelector("meta[name='iftameAccesssToken']").content
+                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+            }, "*");
+        }
+        console.error = function (message) {
+            window.parent.postMessage({
+                "type": "console.error",
+                "message": message,
+                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
+            }, "*");
+        }
+        console.clear = function (message) {
+            window.parent.postMessage({
+                "type": "console.clear",
+                "verifyID": document.querySelector("meta[name='iframeAccesssToken']").content
             }, "*");
         }
     </script>
@@ -34,7 +47,13 @@
 
 <body>
     <!--|HTML|-->
-    <script>/*--|JavaScript|--*/</script>
+    <script>
+        try {
+            /*--|JavaScript|--*/
+        } catch (error) {
+            console.error(error);
+        }
+    </script>
 </body>
 
 </html>

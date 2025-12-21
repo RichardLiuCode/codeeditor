@@ -71,7 +71,7 @@ body {
     width: 15px;
     height: 100%;
     background-color: aliceblue;
-    z-index: 6;
+    z-index: 7;
     display: flex;
     justify-content: center;
     align-items: center;

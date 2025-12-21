@@ -23,7 +23,7 @@ fetch("../iframeTemplate.html")
 // - Iframe Token
 const GernerateTokenCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 let token = "";
-for (let i = 0; i < 5000; i++) {
+for (let i = 0; i < 5030; i++) {
     token = token + GernerateTokenCharacters[Math.floor(Math.random() * GernerateTokenCharacters.length)]
 }
 const IFRAMEACCESSTOKEN = token;
@@ -73,7 +73,19 @@ HTMLeditor.commands.addCommand({
         HTMLeditor.setValue(html_beautify(HTMLeditor.getValue()))
     }
 })
-
+// -- Drop HTML file
+document.getElementById("HTMLeditor").addEventListener("dragover", function (e) {
+    e.preventDefault();
+});
+document.getElementById("HTMLeditor").addEventListener("drop", function (e) {
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    let reader = new FileReader;
+    reader.onload = function (e) {
+        HTMLeditor.setValue(e.target.result)
+    }
+    reader.readAsText(files[0]);
+})
 // - CSS
 const CSSeditor = ace.edit("CSSeditor");
 CSSeditor.setTheme("ace/theme/nord_dark");
@@ -96,7 +108,6 @@ document.getElementById("JSeditor").addEventListener("keydown", function (e) {
         JSeditor.setValue(html_beautify(JSeditor.getValue()))
     }
 });
-
 // Resize
 let isDrag = false;
 let startX;
@@ -157,15 +168,22 @@ setTimeout(function () {
     });
 }, 5000)
 
-// Display custom console.log() messages
+// console
 
 window.addEventListener("message", function (e) {
     if (e.data.verifyID == IFRAMEACCESSTOKEN && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
-        if (e.data.type == "console") {
+        if (e.data.type == "console.log") {
             let consoleLogMessage = document.createElement("div");
             consoleLogMessage.innerHTML = e.data.message;
-            consoleLogMessage.style = "padding-left:4px;width:fit-content;margin-top:3px;"
+            consoleLogMessage.style = "padding-left:2px;width:fit-content;margin-left:2px;margin-top:1px;margin-bottom:2px;"
             document.getElementById("console").appendChild(consoleLogMessage);
+        } else if (e.data.type == "console.error") {
+            let consoleLogMessage = document.createElement("div");
+            consoleLogMessage.innerHTML = "<span style=\"color:white;display:flex;align-items:center;justify-content:left;\"><img src=\"errorSymbol.png\" style=\"width:12px;height:12px;\">&nbsp;" + e.data.message + "</span>";
+            consoleLogMessage.style = "padding-left:2px;width:90%;margin-left:2px;margin-top:1px;margin-bottom:2px;background-color:pink;border-radius:2px;"
+            document.getElementById("console").appendChild(consoleLogMessage);
+        } else if (e.data.type == "console.clear") {
+            document.getElementById("console").innerHTML = "";
         }
     }
 });
