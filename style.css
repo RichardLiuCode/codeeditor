@@ -123,7 +123,7 @@ body {
     bottom: 20px;
     left: 0;
     width: 100%;
-    height: 150px;
+    height: 0px;
     background-color: rgb(68, 68, 68);
     color: white;
     text-align: left;
@@ -168,6 +168,53 @@ body {
     font-family: monospace;
     text-align: left;
     z-index: 5;
+}
+
+#consoleResizeBar {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 25px;
+    background-color: aliceblue;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px 0px 1px 0px;
+    cursor: n-resize;
+    z-index: 6;
+}
+
+.consoleResizeBarHandle {
+    position: absolute;
+    top: calc(50% - 3px);
+    left: calc(50% - 45px);
+    background-color: lightgray;
+    width: 90px;
+    height: 5px;
+    border: none;
+    border-radius: 20px;
+    margin: 0 auto;
+    pointer-events: none;
+    z-index: 7;
+
+}
+
+#openOrCloseConsoleButton {
+    cursor: pointer;
+    position: absolute;
+    left: 3px;
+    bottom: 2px;
+    width: 110px;
+    height: 80%;
+    font-size: 13px;
+    background-color: white;
+    border-radius: 20px;
+    border-width: 1px;
+    z-index: 7;
+}
+
+#consolepanels {
+    display: none;
 }
 
 #codeRunningMessage {
