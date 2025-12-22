@@ -21,12 +21,14 @@
         <div class="torBarElementsWrapper">
             <button id="topBarExportBtn">Export</button>
             <button id="previewOption">Preview</button>
+            <button id="getJSLIB">JS library</button>
         </div>
     </div>
     <div class="topBarMenu" id="previewMenu">
         <div style="width:100%;height:5px;"></div>
         <button id="MaximizeEditorBtn">Maximize Editor</button>
         <button id="previewInFullscreen">Maximize Previewer</button>
+        <button id="WindowFullscreenBtn">Go To Fullscreen Editor</button>
     </div>
     <div class="topBarMenu" id="exportMenu">
         <div style="width:100%;height:5px;"></div>
@@ -66,6 +68,17 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="jsLibSideBar">
+        <h1>Search Javascript library</h1>
+        <p>You can search the <a href="https://cdnjs.com" target="_blank"
+                style="color:rgb(152, 193, 239);text-decoration:none;">cdnjs</a> here and add
+            then to your website.
+        </p>
+        <form id="CDNJSsearchBar">
+            <input class="CNDJSSEARCHBARinput" type="search" placeholder="Search JS Library" name="input">
+            <input class="CNDJSSEARCHBARsub" type="submit" value="Search">
+        </form>
     </div>
 
 </body>

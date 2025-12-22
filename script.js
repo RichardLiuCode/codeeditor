@@ -58,6 +58,9 @@ document.getElementById("jsEditorTab").addEventListener("click", function () {
 document.addEventListener("keydown", function (e) {
     if (e.ctrlKey && e.key == "s") {
         e.preventDefault();
+        localStorage.setItem("codeEditorHTMLcode", HTMLeditor.getValue());
+        localStorage.setItem("codeEditorCSScode", CSSeditor.getValue());
+        localStorage.setItem("codeEditorJScode", JSeditor.getValue());
         runCode();
     }
 })
@@ -400,3 +403,39 @@ document.getElementById("previewInFullscreen").addEventListener("click", functio
     document.getElementById("editors").style.width = "0px"
     document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
 });
+
+// Go TO Fullscreen Editor
+document.getElementById("WindowFullscreenBtn").addEventListener("click", function () {
+    if (!document.fullscreenElement) {
+        document.body.requestFullscreen();
+        this.innerText = "Exit Fullscreen Editor";
+    } else {
+        document.exitFullscreen();
+        this.innerText = "Go To Fullscreen Editor";
+    }
+
+})
+setInterval(function () {
+    if (document.fullscreenElement) {
+        document.getElementById("WindowFullscreenBtn").innerText = "Exit Fullscreen Editor";
+    } else {
+        document.getElementById("WindowFullscreenBtn").innerText = "Go To Fullscreen Editor";
+    }
+
+}, 700);
+
+// autosave
+HTMLeditor.setValue(localStorage.getItem("codeEditorHTMLcode"));
+CSSeditor.setValue(localStorage.getItem("codeEditorCSScode"));
+JSeditor.setValue(localStorage.getItem("codeEditorJScode"));
+HTMLeditor.on("change", function () {
+    localStorage.setItem("codeEditorHTMLcode", HTMLeditor.getValue());
+});
+CSSeditor.on("change", function () {
+    localStorage.setItem("codeEditorCSScode", CSSeditor.getValue());
+});
+JSeditor.on("change", function () {
+    localStorage.setItem("codeEditorJScode", JSeditor.getValue());
+});
+
+// JS lib
