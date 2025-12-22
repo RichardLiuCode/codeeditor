@@ -54,12 +54,15 @@ body {
     right: 5px;
 }
 
-#exportMenu {
+#previewOption {
+    position: absolute;
+    right: 110px;
+}
+
+.topBarMenu {
     position: fixed;
-    right: 5px;
     top: 34px;
     width: 200px;
-    height: 164px;
     background-color: rgb(110, 110, 110);
     z-index: 200;
     border-width: 1px;
@@ -68,7 +71,7 @@ body {
     display: none;
 }
 
-#exportMenu button {
+.topBarMenu button {
     width: 180px;
     height: 30px;
     margin-left: 10px;
@@ -82,6 +85,11 @@ body {
     cursor: pointer;
 }
 
+#exportMenu {
+    right: 5px;
+    height: 164px;
+}
+
 #exportMenu hr {
     width: 100%;
     border: none;
@@ -89,6 +97,11 @@ body {
     height: 1px;
     margin-top: 10px;
     margin-bottom: 4px;
+}
+
+#previewMenu {
+    right: 110px;
+    height:90px;
 }
 
 #codespaceContainer {
@@ -281,7 +294,7 @@ body {
     border-radius: 20px;
     margin: 0 auto;
     pointer-events: none;
-    z-index: 7;
+    z-index: 6;
 
 }
 
@@ -296,8 +309,8 @@ body {
     background-color: white;
     border-radius: 20px;
     border-width: 1px;
-    z-index: 7;
-    user-select:none;
+    z-index: 6;
+    user-select: none;
 }
 
 #consolepanels {
@@ -316,7 +329,7 @@ body {
     border-radius: 20px;
     border-width: 1px;
     z-index: 8;
-    user-select:none;
+    user-select: none;
 }
 
 #codeRunningMessage {

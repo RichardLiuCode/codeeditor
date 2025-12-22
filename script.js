@@ -163,7 +163,7 @@ document.addEventListener("mousemove", function (e) {
             newPosition = -1
         }
         if (newPosition >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17) {
-            newPosition = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+            newPosition = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17;
         }
         document.getElementById("resizeBar").style.left = newPosition + "px";
         document.getElementById("editors").style.width = newPosition + "px";
@@ -369,4 +369,34 @@ document.getElementById("downloadJavaScript").addEventListener("click", function
     downloadLink.download = "script.js";
     downloadLink.click();
     URL.removeObjectURL();
+});
+// Preview
+let isPreviewMenuOn = false;
+document.getElementById("previewOption").addEventListener("click", function () {
+    if (!isPreviewMenuOn) {
+        isPreviewMenuOn = true;
+        document.getElementById("previewMenu").style.display = "revert";
+        this.innerText = "Calcel";
+        this.style.borderRadius = "5px 5px 0px 0px";
+    } else {
+        isPreviewMenuOn = false;
+        document.getElementById("previewMenu").style.display = "none";
+        this.innerText = "Preview";
+        this.style.borderRadius = "5px";
+    }
+});
+// Maximize Editor Button
+document.getElementById("MaximizeEditorBtn").addEventListener("click", function () {
+    document.getElementById("resizeBar").style.left = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
+    document.getElementById("editors").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
+    document.getElementById("previewAreaWrapper").style.width = "0px"
+    if (isConsoleopened) {
+        document.getElementById("openOrCloseConsoleButton").click();
+    }
+});
+// Preview in fullscreen button
+document.getElementById("previewInFullscreen").addEventListener("click", function () {
+    document.getElementById("resizeBar").style.left = "-1px"
+    document.getElementById("editors").style.width = "0px"
+    document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
 });
