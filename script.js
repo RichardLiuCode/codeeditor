@@ -439,3 +439,84 @@ JSeditor.on("change", function () {
 });
 
 // JS lib
+let isLibSearchOpen = false;
+document.getElementById("getJSLIB").addEventListener("click", function () {
+    if (!isLibSearchOpen) {
+        isLibSearchOpen = true;
+        document.getElementById("jsLibSideBar").style.transition = "1s"
+        document.getElementById("jsLibSideBar").style.right = "0px";
+        this.innerText = "Close Library"
+    } else {
+        isLibSearchOpen = false;
+        document.getElementById("jsLibSideBar").style.transition = "1s"
+        document.getElementById("jsLibSideBar").style.right = "-400px";
+        this.innerText = "JS Library"
+    }
+    setTimeout(function () {
+        document.getElementById("jsLibSideBar").style.transition = "none"
+    }, 1010)
+
+})
+document.getElementById("CDNJSsearchBar").addEventListener("submit", function (e) {
+    e.preventDefault();
+    let searchKeyword = new FormData(document.getElementById("CDNJSsearchBar"))
+    fetch("https://api.cdnjs.com/libraries?search=" + searchKeyword.get("input") + "&fields=description,github")
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+
+            data = data.results
+            if (data.length >= 1) {
+                let allOldResult = document.getElementById("CDNJSsearchResultDsipalyContainer").querySelectorAll(".resultListObject,p,div,h1,h2,button");
+                for (let i = 0; i < allOldResult.length; i++) {
+                    allOldResult[i].remove();
+                }
+                for (let i = 0; i < data.length; i++) {
+                    let ResultContainer = document.createElement("div");
+                    ResultContainer.className = "resultListObject";
+                    /* Result title */
+                    let ResultTitle = document.createElement("p");
+                    ResultTitle.innerHTML = "<span style=\"font-size:22px;\">" + data[i].name + "</span>" + "<br>" + "<span style=\"font-size:16px;\">" + data[i].description + "</span>" + "<br>" + "<a style=\"color:blue;font-size:14px;text-decoration:underline;\" href=\"https://github.com/" + data[i].github.user + "/" + data[i].github.repo + "#readme\" target=\"_blank\">Read Document</a>";
+                    ResultContainer.appendChild(ResultTitle);
+
+                    /* Result Code Content*/
+                    let resultCodeContent = document.createElement("div");
+                    resultCodeContent.className = "resultListObjectCodeContent";
+
+                    /* Result Copy Code button */
+                    let resultCodeCopyButton = document.createElement("div");
+                    resultCodeCopyButton.innerText = "Copy";
+                    resultCodeCopyButton.addEventListener("click", function () {
+                        navigator.clipboard.writeText(getScripTag(data[i].latest))
+                    })
+                    resultCodeCopyButton.className = "resultListObjectCodeContentCopyButton"
+                    resultCodeContent.appendChild(resultCodeCopyButton);
+
+                    /* Result dividing Line*/
+                    let resultDividingLine = document.createElement("hr");
+                    resultDividingLine.className = "resultListObjectDividingLine";
+                    resultCodeContent.appendChild(resultDividingLine);
+
+
+                    /* Result Content Text*/
+                    let ResultContentText = document.createElement("span");
+                    ResultContentText.innerText = getScripTag(data[i].latest);
+
+                    ResultContainer.appendChild(resultCodeContent);
+                    resultCodeContent.appendChild(ResultContentText);
+
+                    document.getElementById("CDNJSsearchResultDsipalyContainer").appendChild(ResultContainer);
+                }
+            } else {
+                document.getElementById("CDNJSsearchResultDsipalyContainer").innerHTML = "<h1>Failed to search!</h1><br><p style=\"text-align:center;\">There has no result of <br>what you are searching!</p>"
+            }
+        })
+
+});
+function getScripTag(url) {
+    return "<script src=\"" + url + "\"></script>"
+}
+function getHTMLScripTag(url) {
+    return "&ltscript src=\"" + url + "\"&gt&lt/script&gt"
+}

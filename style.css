@@ -116,7 +116,6 @@ body {
 }
 
 #codespaceContainer {
-
     margin: 0px;
     margin-top: 60px;
     margin-left: 0px;
@@ -362,12 +361,14 @@ body {
     box-shadow: 0 0 2px 2px lightgray;
 }
 
+/* Search JS Library*/
+
 #jsLibSideBar {
     position: absolute;
     top: 61px;
-    right: 0px;
+    right: -400px;
     width: 400px;
-    height: 720px;
+    height: calc(100vh - 100px);
     background-color: rgb(102, 108, 126);
     z-index: 90;
 }
@@ -426,4 +427,97 @@ body {
     color: white;
     font-size: 20px;
     cursor: pointer;
+}
+
+#CDNJSsearchResultDsipalyContainer {
+    width: 340px;
+    height:calc(100% - 190px);
+    background-color: gray;
+    margin-left: 30px;
+    margin-top: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: lightgray;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#CDNJSsearchResultDsipalyContainer::-webkit-scrollbar {
+    width: 10px;
+    background-color: white;
+    border-radius: 0 3px 3px 0px
+}
+
+#CDNJSsearchResultDsipalyContainer::-webkit-scrollbar-thumb {
+    background-color: rgb(140, 137, 137);
+    border-radius: 2px;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObject {
+    width: 300px;
+    height: fit-content;
+    background-color: rgb(167, 164, 164);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#CDNJSsearchResultDsipalyContainer p {
+    margin-left: 0px;
+    margin-bottom: 4px;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContent {
+    width: 290px;
+    background-color: rgb(75, 75, 75);
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-left: 0px;
+    font-family: monospace;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton {
+    margin-left: 245px;
+    margin-top: 2px;
+    background-color: gray;
+    color: white;
+    border-width: 1px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: white;
+    cursor: pointer;
+    text-align: center;
+    font-family: arial;
+    font-size: 14px;
+    width: 43px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:hover {
+    background-color: rgb(143, 142, 142);
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:active {
+    background-color: rgb(175, 172, 172);
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectDividingLine {
+    border: none;
+    height: 1px;
+    background-color: white;
+    width: 100%;
 }
