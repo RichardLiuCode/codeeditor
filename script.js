@@ -174,6 +174,14 @@ document.addEventListener("mousemove", function (e) {
     }
 })
 
+// responsive
+setInterval(function () {
+    if (parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left) >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 332) {
+        document.getElementById("consolepanels").style.display = "none";
+    } else {
+        document.getElementById("consolepanels").style.display = "revert";
+    }
+}, 20)
 // Update code
 
 function runCode() {
@@ -441,6 +449,7 @@ JSeditor.on("change", function () {
 // JS lib
 let isLibSearchOpen = false;
 document.getElementById("getJSLIB").addEventListener("click", function () {
+    this.style.pointerEvents = "none";
     if (!isLibSearchOpen) {
         isLibSearchOpen = true;
         document.getElementById("jsLibSideBar").style.transition = "1s"
@@ -453,7 +462,8 @@ document.getElementById("getJSLIB").addEventListener("click", function () {
         this.innerText = "JS Library"
     }
     setTimeout(function () {
-        document.getElementById("jsLibSideBar").style.transition = "none"
+        document.getElementById("jsLibSideBar").style.transition = "none";
+        document.getElementById("getJSLIB").style.pointerEvents = "auto";
     }, 1010)
 
 })

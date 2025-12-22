@@ -431,7 +431,7 @@ body {
 
 #CDNJSsearchResultDsipalyContainer {
     width: 340px;
-    height:calc(100% - 190px);
+    height: calc(100% - 190px);
     background-color: gray;
     margin-left: 30px;
     margin-top: 20px;
