@@ -177,11 +177,9 @@ body {
     background-color: white;
 }
 
-js
-
 /* Shortcut Guide */
 #shortcutsGuideSideBar {
-    background-color: rgb(223, 223, 223);
+    background-color: #dfdfdf;
 }
 
 #shortcutsGuideSideBar h1 {

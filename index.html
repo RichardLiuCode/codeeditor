@@ -4,8 +4,7 @@
 <head>
     <title>Code edtior</title>
     <link id="style" rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="darkMode.css">
-    <link rel="stylesheet" href="lightMode.css">
+    <link id="themeStylesheet" rel="stylesheet" href="darkMode.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.js"
         integrity="sha512-T2otaV2NuxAJAOCoj8ijyy+eAAadZlpvdLmakrIGVFbBkthgIFqLTXd+T8Z+S+kf4V7Ib5+6f6r4D4IdS9Ey4A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -32,6 +31,7 @@
         <button id="MaximizeEditorBtn">Maximize Editor</button>
         <button id="previewInFullscreen">Maximize Previewer</button>
         <button id="WindowFullscreenBtn">Go To Fullscreen Editor</button>
+        <div class="darkmodeOption">Darkmode<input type="range" id="darkmodeSwitch" min="0" max="1"></div>
     </div>
     <div class="topBarMenu" id="exportMenu">
         <div style="width:100%;height:5px;"></div>
@@ -74,8 +74,8 @@
     </div>
     <div id="jsLibSideBar">
         <h1>Search Javascript library</h1>
-        <p>You can search the <a href="https://cdnjs.com" target="_blank"
-                style="text-decoration:none;">cdnjs</a> here and add
+        <p>You can search the <a href="https://cdnjs.com" target="_blank" style="text-decoration:none;">cdnjs</a> here
+            and add
             then to your website.
         </p>
         <form id="CDNJSsearchBar">

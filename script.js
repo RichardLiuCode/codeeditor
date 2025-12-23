@@ -456,13 +456,11 @@ document.getElementById("getJSLIB").addEventListener("click", function () {
         isLibSearchOpen = true;
         document.getElementById("jsLibSideBar").style.transition = "1s"
         document.getElementById("jsLibSideBar").style.right = "0px";
-        document.getElementById("jsLibSideBar").style.zIndex = "1000";
         this.innerText = "Close Library"
     } else {
         isLibSearchOpen = false;
         document.getElementById("jsLibSideBar").style.transition = "1s"
         document.getElementById("jsLibSideBar").style.right = "-400px";
-        document.getElementById("jsLibSideBar").style.zIndex = "0";
         this.innerText = "JS Library"
     }
     setTimeout(function () {
@@ -540,10 +538,32 @@ document.getElementById("getShortcuts").addEventListener("click", function () {
     if (!isShortcutGuideOpened) {
         isShortcutGuideOpened = true;
         this.innerText = "Close guide";
-        document.getElementById("shortcutsGuideSideBar").style.right = "0px"
+        document.getElementById("shortcutsGuideSideBar").style.transition = "1s";
+        document.getElementById("shortcutsGuideSideBar").style.right = "0px";
     } else {
         isShortcutGuideOpened = false;
         this.innerText = "Shortcuts";
-        document.getElementById("shortcutsGuideSideBar").style.right = "-400px"
+        document.getElementById("shortcutsGuideSideBar").style.transition = "1s";
+        document.getElementById("shortcutsGuideSideBar").style.right = "-400px";
     };
-})
+    setTimeout(function () {
+        document.getElementById("shortcutsGuideSideBar").style.transition = "none"
+    }, 1005);
+});
+
+// Darkmode switch
+setInterval(function () {
+    if (document.getElementById("darkmodeSwitch").value == 1) {
+        document.getElementById("themeStylesheet").href = "darkMode.css";
+        let theme = "ace/theme/nord_dark"
+        HTMLeditor.setTheme(theme);
+        CSSeditor.setTheme(theme);
+        JSeditor.setTheme(theme);
+    } else {
+        document.getElementById("themeStylesheet").href = "lightMode.css";
+        let theme = "ace/theme/chrome"
+        HTMLeditor.setTheme(theme);
+        CSSeditor.setTheme(theme);
+        JSeditor.setTheme(theme);
+    }
+}, 300)
