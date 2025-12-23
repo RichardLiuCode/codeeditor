@@ -179,7 +179,9 @@ setInterval(function () {
     if (parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left) >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 332) {
         document.getElementById("consolepanels").style.display = "none";
     } else {
-        document.getElementById("consolepanels").style.display = "revert";
+        if (isConsoleopened) {
+            document.getElementById("consolepanels").style.display = "revert";
+        }
     }
 }, 20)
 // Update code
@@ -454,11 +456,13 @@ document.getElementById("getJSLIB").addEventListener("click", function () {
         isLibSearchOpen = true;
         document.getElementById("jsLibSideBar").style.transition = "1s"
         document.getElementById("jsLibSideBar").style.right = "0px";
+        document.getElementById("jsLibSideBar").style.zIndex = "1000";
         this.innerText = "Close Library"
     } else {
         isLibSearchOpen = false;
         document.getElementById("jsLibSideBar").style.transition = "1s"
         document.getElementById("jsLibSideBar").style.right = "-400px";
+        document.getElementById("jsLibSideBar").style.zIndex = "0";
         this.innerText = "JS Library"
     }
     setTimeout(function () {
@@ -530,3 +534,16 @@ function getScripTag(url) {
 function getHTMLScripTag(url) {
     return "&ltscript src=\"" + url + "\"&gt&lt/script&gt"
 }
+// Shortcut guide
+let isShortcutGuideOpened = false;
+document.getElementById("getShortcuts").addEventListener("click", function () {
+    if (!isShortcutGuideOpened) {
+        isShortcutGuideOpened = true;
+        this.innerText = "Close guide";
+        document.getElementById("shortcutsGuideSideBar").style.right = "0px"
+    } else {
+        isShortcutGuideOpened = false;
+        this.innerText = "Shortcuts";
+        document.getElementById("shortcutsGuideSideBar").style.right = "-400px"
+    };
+})

@@ -3,7 +3,9 @@
 
 <head>
     <title>Code edtior</title>
-    <link rel="stylesheet" href="style.css">
+    <link id="style" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="darkMode.css">
+    <link rel="stylesheet" href="lightMode.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.js"
         integrity="sha512-T2otaV2NuxAJAOCoj8ijyy+eAAadZlpvdLmakrIGVFbBkthgIFqLTXd+T8Z+S+kf4V7Ib5+6f6r4D4IdS9Ey4A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -22,6 +24,7 @@
             <button id="topBarExportBtn">Export</button>
             <button id="previewOption">Preview</button>
             <button id="getJSLIB">JS library</button>
+            <button id="getShortcuts">Shortcuts</button>
         </div>
     </div>
     <div class="topBarMenu" id="previewMenu">
@@ -72,7 +75,7 @@
     <div id="jsLibSideBar">
         <h1>Search Javascript library</h1>
         <p>You can search the <a href="https://cdnjs.com" target="_blank"
-                style="color:rgb(152, 193, 239);text-decoration:none;">cdnjs</a> here and add
+                style="text-decoration:none;">cdnjs</a> here and add
             then to your website.
         </p>
         <form id="CDNJSsearchBar">
@@ -84,7 +87,14 @@
                 Your result will
                 be here</p>
         </div>
-
+    </div>
+    <div id="shortcutsGuideSideBar">
+        <h1>Shortcuts</h1>
+        <ol>
+            <li>Format code: Alt + Shift + F</li>
+            <li>Save and run code: Ctrl +S</li>
+        </ol>
+    </div>
 
 </body>
 

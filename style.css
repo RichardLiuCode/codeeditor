@@ -70,6 +70,11 @@ body {
     right: 215px;
 }
 
+#getShortcuts {
+    position: absolute;
+    right: 320px;
+}
+
 .topBarMenu {
     position: fixed;
     top: 34px;
@@ -520,4 +525,34 @@ body {
     height: 1px;
     background-color: white;
     width: 100%;
+}
+
+/* Shortcut Guide */
+#shortcutsGuideSideBar {
+    position: absolute;
+    top: 61px;
+    right: -400px;
+    width: 400px;
+    height: calc(100vh - 100px);
+    background-color: rgb(102, 108, 126);
+    z-index: 90;
+    transition: 1s;
+}
+
+#shortcutsGuideSideBar h1 {
+    color: white;
+    font-family: arial;
+    text-align: center;
+}
+
+#shortcutsGuideSideBar ol {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+#shortcutsGuideSideBar li {
+    color: white;
+    font-family: arial;
+    margin-bottom: 5px;
 }
