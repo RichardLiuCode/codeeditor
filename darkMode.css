@@ -39,6 +39,10 @@ body {
     background-color: black;
 }
 
+.darkmodeOption {
+    color: lightgray;
+}
+
 
 #codespaceContainer {
     border-color: gray;
@@ -117,7 +121,7 @@ body {
 }
 
 #jsLibSideBar a {
-    color:rgb(152, 193, 239);
+    color: rgb(152, 193, 239);
 }
 
 

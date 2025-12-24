@@ -39,6 +39,9 @@ body {
     background-color: black;
 }
 
+.darkmodeOption {
+    color: black;
+}
 
 #codespaceContainer {
     border-color: gray;
