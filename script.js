@@ -20,7 +20,9 @@ fetch("templates/iframeTemplate.html")
         html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN)
         document.getElementById("preview").srcdoc = html
     });
-document.getElementById("consolepanels").style.display = "none";
+window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("consolepanels").style.display = "none";
+})
 if (localStorage.getItem("codeEditorDarkMode") == "on") {
     document.getElementById("darkmodeSwitch").value = 1;
 } else {
@@ -35,26 +37,35 @@ for (let i = 0; i < 5030; i++) {
 const IFRAMEACCESSTOKEN = token;
 // Editor
 // - Tabs
+let selectedTabColor = "rgba(138, 136, 136, 1)";
+let nonSelectedTabsColor = "rgb(91, 90, 90)";
+if (document.getElementById("darkmodeSwitch").value == 1) {
+    selectedTabColor = "rgba(138, 136, 136, 1)";
+    nonSelectedTabsColor = "rgb(91, 90, 90)";
+} else {
+    selectedTabColor = "rgba(184, 185, 187, 1)";
+    nonSelectedTabsColor = "rgba(209, 208, 208, 1)";
+}
 document.getElementById("htmlEditorTab").addEventListener("click", function () {
-    this.style.backgroundColor = "rgba(138, 136, 136, 1)";
-    document.getElementById("jsEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
-    document.getElementById("cssEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
+    this.style.backgroundColor = selectedTabColor;
+    document.getElementById("jsEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("cssEditorTab").style.backgroundColor = nonSelectedTabsColor;
     document.getElementById("HTMLeditor").style.zIndex = 4;
     document.getElementById("CSSeditor").style.zIndex = 3;
     document.getElementById("JSeditor").style.zIndex = 2;
 });
 document.getElementById("cssEditorTab").addEventListener("click", function () {
-    this.style.backgroundColor = "rgba(138, 136, 136, 1)";
-    document.getElementById("jsEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
-    document.getElementById("htmlEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
+    this.style.backgroundColor = selectedTabColor;
+    document.getElementById("jsEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("htmlEditorTab").style.backgroundColor = nonSelectedTabsColor;
     document.getElementById("CSSeditor").style.zIndex = 4;
     document.getElementById("HTMLeditor").style.zIndex = 2;
     document.getElementById("JSeditor").style.zIndex = 3;
 });
 document.getElementById("jsEditorTab").addEventListener("click", function () {
-    document.getElementById("htmlEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
-    document.getElementById("cssEditorTab").style.backgroundColor = "rgb(91, 90, 90)";
-    this.style.backgroundColor = "rgba(138, 136, 136, 1)";
+    document.getElementById("htmlEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("cssEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    this.style.backgroundColor = selectedTabColor;
     document.getElementById("JSeditor").style.zIndex = 4;
     document.getElementById("CSSeditor").style.zIndex = 3;
     document.getElementById("HTMLeditor").style.zIndex = 2;
@@ -215,7 +226,7 @@ setTimeout(function () {
             }
         }
     });
-}, 5000)
+}, 500)
 
 // console
 
@@ -437,9 +448,12 @@ setInterval(function () {
 }, 700);
 
 // autosave
-HTMLeditor.setValue(localStorage.getItem("codeEditorHTMLcode"));
-CSSeditor.setValue(localStorage.getItem("codeEditorCSScode"));
-JSeditor.setValue(localStorage.getItem("codeEditorJScode"));
+HTMLeditor.setValue("");
+CSSeditor.setValue("");
+JSeditor.setValue("");
+HTMLeditor.insert(localStorage.getItem("codeEditorHTMLcode") || "");
+CSSeditor.insert(localStorage.getItem("codeEditorCSScode") || "");
+JSeditor.insert(localStorage.getItem("codeEditorJScode") || "");
 HTMLeditor.on("change", function () {
     localStorage.setItem("codeEditorHTMLcode", HTMLeditor.getValue());
 });
@@ -562,6 +576,8 @@ setInterval(function () {
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
         localStorage.setItem("codeEditorDarkMode", "on");
+        selectedTabColor = "rgba(138, 136, 136, 1)";
+        nonSelectedTabsColor = "rgb(91, 90, 90)";
     } else {
         document.getElementById("themeStylesheet").href = "lightMode.css";
         let theme = "ace/theme/chrome"
@@ -569,5 +585,18 @@ setInterval(function () {
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
         localStorage.setItem("codeEditorDarkMode", "off");
+        selectedTabColor = "rgba(184, 185, 187, 1)";
+        nonSelectedTabsColor = "rgba(209, 208, 208, 1)";
     }
 }, 300);
+document.getElementById("darkmodeSwitch").addEventListener("change", function () {
+    setTimeout(function () {
+        if (parseFloat(document.getElementById("HTMLeditor").style.zIndex) == 4) {
+            document.getElementById("htmlEditorTab").click();
+        } else if (parseFloat(document.getElementById("CSSeditor").style.zIndex) == 4) {
+            document.getElementById("cssEditorTab").click();
+        } else if (parseFloat(document.getElementById("JSeditor").style.zIndex) == 4) {
+            document.getElementById("jsEditorTab").click();
+        }
+    }, 200)
+})

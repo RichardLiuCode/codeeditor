@@ -50,8 +50,13 @@ body {
 #htmlEditorTab,
 #cssEditorTab,
 #jsEditorTab {
-    background-color: rgb(188, 186, 186);
-    color: white;
+    background-color: rgb(211, 210, 210);
+    color: rgb(62, 62, 62);
+
+}
+
+.SelectedEditorTab {
+    background-color: red;
 }
 
 #resizeBar {
@@ -140,7 +145,7 @@ body {
 }
 
 #CDNJSsearchResultDsipalyContainer {
-    background-color: gray;
+    background-color: rgb(224, 229, 234);
     border-color: lightgray;
 }
 
@@ -149,35 +154,35 @@ body {
 }
 
 #CDNJSsearchResultDsipalyContainer::-webkit-scrollbar-thumb {
-    background-color: rgb(140, 137, 137);
+    background-color: rgb(214, 219, 223);
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObject {
-    background-color: rgb(167, 164, 164);
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObjectCodeContent {
-    background-color: rgb(75, 75, 75);
-    border-color: white;
+    background-color: lightgray;
+    border-color: gray;
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton {
-    background-color: gray;
-    color: white;
-    border-color: white;
+    background-color: rgb(199, 198, 198);
+    color: black;
+    border-color: gray;
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:hover {
-    background-color: rgb(143, 142, 142);
+    background-color: rgb(186, 184, 184);
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:active {
-    background-color: rgb(175, 172, 172);
+    background-color: rgba(209, 206, 206, 0.879);
 }
 
 #CDNJSsearchResultDsipalyContainer .resultListObjectDividingLine {
-    background-color: white;
+    background-color: black;
 }
 
 /* Shortcut Guide */
