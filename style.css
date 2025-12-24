@@ -4,7 +4,6 @@ body {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-color: white;
     top: 0;
     left: 0;
 }
@@ -15,7 +14,6 @@ body {
     left: 0;
     width: 100vw;
     height: 60px;
-    background-color: rgb(110, 110, 110);
     z-index: 3;
 
 }

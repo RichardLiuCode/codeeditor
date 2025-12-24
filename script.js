@@ -21,6 +21,11 @@ fetch("templates/iframeTemplate.html")
         document.getElementById("preview").srcdoc = html
     });
 document.getElementById("consolepanels").style.display = "none";
+if (localStorage.getItem("codeEditorDarkMode") == "on") {
+    document.getElementById("darkmodeSwitch").value = 1;
+} else {
+    document.getElementById("darkmodeSwitch").value = 0;
+}
 // - Iframe Token
 const GernerateTokenCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 let token = "";
@@ -66,7 +71,6 @@ document.addEventListener("keydown", function (e) {
 })
 // - HTML
 const HTMLeditor = ace.edit("HTMLeditor");
-HTMLeditor.setTheme("ace/theme/nord_dark");
 HTMLeditor.session.setMode("ace/mode/html");
 HTMLeditor.setFontSize(14);
 HTMLeditor.setReadOnly(false);
@@ -92,7 +96,6 @@ document.getElementById("HTMLeditor").addEventListener("drop", function (e) {
 });
 // - CSS
 const CSSeditor = ace.edit("CSSeditor");
-CSSeditor.setTheme("ace/theme/nord_dark");
 CSSeditor.session.setMode("ace/mode/css");
 CSSeditor.setReadOnly(false);
 CSSeditor.setFontSize(14);
@@ -118,7 +121,6 @@ document.getElementById("CSSeditor").addEventListener("drop", function (e) {
 });
 // - JS
 const JSeditor = ace.edit("JSeditor");
-JSeditor.setTheme("ace/theme/nord_dark");
 JSeditor.session.setMode("ace/mode/javascript");
 JSeditor.setReadOnly(false);
 JSeditor.setFontSize(14);
@@ -559,11 +561,13 @@ setInterval(function () {
         HTMLeditor.setTheme(theme);
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
+        localStorage.setItem("codeEditorDarkMode", "on");
     } else {
         document.getElementById("themeStylesheet").href = "lightMode.css";
         let theme = "ace/theme/chrome"
         HTMLeditor.setTheme(theme);
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
+        localStorage.setItem("codeEditorDarkMode", "off");
     }
-}, 300)
+}, 300);
