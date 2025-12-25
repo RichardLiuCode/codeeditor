@@ -139,7 +139,7 @@ body {
     margin-left: 0px;
     position: relative;
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 62px);
     border-style: solid;
     border-width: 1px;
     border-color: gray;
