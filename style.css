@@ -386,7 +386,7 @@ body {
     top: 61px;
     right: -400px;
     width: 400px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 60px);
     background-color: rgb(102, 108, 126);
     z-index: 90;
 }
@@ -547,7 +547,7 @@ body {
     top: 61px;
     right: -400px;
     width: 400px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 60px);
     background-color: rgb(102, 108, 126);
     z-index: 91;
 }
