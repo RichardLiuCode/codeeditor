@@ -355,7 +355,7 @@ document.getElementById("downloadZip").addEventListener("click", function () {
             .then(function (html) {
                 html = html.replace("{{ HTML }}", HTMLeditor.getValue());
                 html = html.replace("{{ Style }}", "<link rel=\"stylesheet\" href=\"style.css\">");
-                html = html.replace("{{ Script }}", "<link rel=\"stylesheet\" href=\"style.css\">");
+                html = html.replace("{{ Script }}", "<script src=\"script.js\"></script>");
                 zip.file("index.html", html);
                 zip.file("style.css", CSSeditor.getValue());
 
