@@ -195,3 +195,20 @@ body {
 #shortcutsGuideSideBar li {
     color: white;
 }
+
+
+/* Editor scrollbar*/
+
+.ace_scrollbar::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 0px;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb {
+    background: #92919180;
+    border-radius: 0px;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #b1afaf7c;
+}

@@ -89,7 +89,7 @@ HTMLeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        HTMLeditor.setValue(html_beautify(HTMLeditor.getValue()));
+        HTMLeditor.session.setValue(html_beautify(HTMLeditor.getValue()));
     }
 });
 // -- Drop HTML file
@@ -114,7 +114,7 @@ CSSeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        CSSeditor.setValue(css_beautify(CSSeditor.getValue()));
+        CSSeditor.session.setValue(css_beautify(CSSeditor.getValue()));
     }
 });
 // -- Drop CSS file
@@ -139,7 +139,7 @@ JSeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        JSeditor.setValue(js_beautify(JSeditor.getValue()));
+        JSeditor.session.setValue(js_beautify(JSeditor.getValue()));
     }
 });
 // -- Drop CSS file

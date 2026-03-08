@@ -569,3 +569,10 @@ body {
     font-family: arial;
     margin-bottom: 5px;
 }
+
+/* Editor scrollbar */
+
+.ace_scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
