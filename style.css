@@ -215,7 +215,7 @@ body {
     pointer-events: none;
 }
 
-#resizeBar:hover {
+#resizeBar:active {
     width: 30px;
     height: calc(100% + 1px);
     margin-left: -7px;

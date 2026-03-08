@@ -164,12 +164,21 @@ document.getElementById("resizeBar").addEventListener("mousedown", function (e) 
     isDrag = true;
     startX = e.x;
     startLeft = parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left);
+    HTMLeditor.setReadOnly(true);
+    CSSeditor.setReadOnly(true);
+    JSeditor.setReadOnly(true);
 });
 document.getElementById("resizeBar").addEventListener("mouseup", function (e) {
     isDrag = false;
+    HTMLeditor.setReadOnly(false);
+    CSSeditor.setReadOnly(false);
+    JSeditor.setReadOnly(false);
 });
 document.getElementById("codespaceContainer").addEventListener("mouseout", function (e) {
     isDrag = false;
+    HTMLeditor.setReadOnly(false);
+    CSSeditor.setReadOnly(false);
+    JSeditor.setReadOnly(false);
 });
 document.addEventListener("mousemove", function (e) {
     if (isDrag) {
@@ -184,6 +193,9 @@ document.addEventListener("mousemove", function (e) {
         document.getElementById("resizeBar").style.left = newPosition + "px";
         document.getElementById("editors").style.width = newPosition + "px";
         document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(codespaceContainer).width) - newPosition - 17 + "px";
+        HTMLeditor.setReadOnly(true);
+        CSSeditor.setReadOnly(true);
+        JSeditor.setReadOnly(true);
     }
 });
 
