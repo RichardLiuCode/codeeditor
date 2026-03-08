@@ -28,6 +28,7 @@ if (localStorage.getItem("codeEditorDarkMode") == "on") {
 } else {
     document.getElementById("darkmodeSwitch").value = 0;
 }
+ace.require("ace/ext/language_tools");
 // - Iframe Token
 const GernerateTokenCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 let token = "";
@@ -92,6 +93,10 @@ HTMLeditor.commands.addCommand({
         HTMLeditor.session.setValue(html_beautify(HTMLeditor.getValue()));
     }
 });
+HTMLeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
 // -- Drop HTML file
 document.getElementById("HTMLeditor").addEventListener("dragover", function (e) {
     e.preventDefault();
@@ -117,6 +122,10 @@ CSSeditor.commands.addCommand({
         CSSeditor.session.setValue(css_beautify(CSSeditor.getValue()));
     }
 });
+CSSeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
 // -- Drop CSS file
 document.getElementById("CSSeditor").addEventListener("dragover", function (e) {
     e.preventDefault();
@@ -131,7 +140,6 @@ document.getElementById("CSSeditor").addEventListener("drop", function (e) {
     reader.readAsText(files[0]);
 });
 // - JS
-ace.require("ace/ext/language_tools");
 const JSeditor = ace.edit("JSeditor");
 JSeditor.session.setMode("ace/mode/javascript");
 JSeditor.setReadOnly(false);
@@ -143,11 +151,9 @@ JSeditor.commands.addCommand({
         JSeditor.session.setValue(js_beautify(JSeditor.getValue()));
     }
 });
-
 JSeditor.setOptions({
     enableBasicAutocompletion: true,
-    enableLiveAutocompletion: true, // Suggestions as you type
-    enableSnippets: true
+    enableLiveAutocompletion: true
 });
 // -- Drop JS file
 document.getElementById("JSeditor").addEventListener("dragover", function (e) {
