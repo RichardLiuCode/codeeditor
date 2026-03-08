@@ -131,6 +131,7 @@ document.getElementById("CSSeditor").addEventListener("drop", function (e) {
     reader.readAsText(files[0]);
 });
 // - JS
+ace.require("ace/ext/language_tools");
 const JSeditor = ace.edit("JSeditor");
 JSeditor.session.setMode("ace/mode/javascript");
 JSeditor.setReadOnly(false);
@@ -142,7 +143,13 @@ JSeditor.commands.addCommand({
         JSeditor.session.setValue(js_beautify(JSeditor.getValue()));
     }
 });
-// -- Drop CSS file
+
+JSeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true, // Suggestions as you type
+    enableSnippets: true
+});
+// -- Drop JS file
 document.getElementById("JSeditor").addEventListener("dragover", function (e) {
     e.preventDefault();
 });
