@@ -11,28 +11,35 @@
                 "loaded": true,
                 "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
-        })
+        });
         window.addEventListener("message", function (e) {
             if (e.data.verifyID == document.querySelector("meta[name='iframeAccessToken']").content && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
                 if (e.data.type == "consoleInput") {
                     eval("try{" + e.data.content + "}catch(error){console.error(error);}");
                 }
             }
-        })
+        });
         console.log = function (message) {
+            if (message !== null && typeof message === "object") {
+                try {
+                    message = JSON.stringify(message);
+                } catch {
+
+                }
+            }
             window.parent.postMessage({
                 "type": "console.log",
                 "message": message,
                 "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
-        }
+        };
         console.error = function (message) {
             window.parent.postMessage({
                 "type": "console.error",
                 "message": message,
                 "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
             }, "*");
-        }
+        };
         console.clear = function (message) {
             window.parent.postMessage({
                 "type": "console.clear",
@@ -51,6 +58,7 @@
         try {
             /*--|JavaScript|--*/
         } catch (error) {
+            console.log(error.type);
             console.error(error);
         }
     </script>

@@ -17,12 +17,12 @@ fetch("templates/iframeTemplate.html")
         html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
         html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
         html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
-        html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN)
-        document.getElementById("preview").srcdoc = html
+        html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN);
+        document.getElementById("preview").srcdoc = html;
     });
 window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("consolepanels").style.display = "none";
-})
+});
 if (localStorage.getItem("codeEditorDarkMode") == "on") {
     document.getElementById("darkmodeSwitch").value = 1;
 } else {
@@ -32,7 +32,7 @@ if (localStorage.getItem("codeEditorDarkMode") == "on") {
 const GernerateTokenCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 let token = "";
 for (let i = 0; i < 5030; i++) {
-    token = token + GernerateTokenCharacters[Math.floor(Math.random() * GernerateTokenCharacters.length)]
+    token = token + GernerateTokenCharacters[Math.floor(Math.random() * GernerateTokenCharacters.length)];
 }
 const IFRAMEACCESSTOKEN = token;
 // Editor
@@ -79,7 +79,7 @@ document.addEventListener("keydown", function (e) {
         localStorage.setItem("codeEditorJScode", JSeditor.getValue());
         runCode();
     }
-})
+});
 // - HTML
 const HTMLeditor = ace.edit("HTMLeditor");
 HTMLeditor.session.setMode("ace/mode/html");
@@ -89,9 +89,9 @@ HTMLeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        HTMLeditor.setValue(html_beautify(HTMLeditor.getValue()))
+        HTMLeditor.setValue(html_beautify(HTMLeditor.getValue()));
     }
-})
+});
 // -- Drop HTML file
 document.getElementById("HTMLeditor").addEventListener("dragover", function (e) {
     e.preventDefault();
@@ -101,8 +101,8 @@ document.getElementById("HTMLeditor").addEventListener("drop", function (e) {
     let files = e.dataTransfer.files;
     let reader = new FileReader;
     reader.onload = function (e) {
-        HTMLeditor.setValue(e.target.result)
-    }
+        HTMLeditor.setValue(e.target.result);
+    };
     reader.readAsText(files[0]);
 });
 // - CSS
@@ -114,7 +114,7 @@ CSSeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        CSSeditor.setValue(css_beautify(CSSeditor.getValue()))
+        CSSeditor.setValue(css_beautify(CSSeditor.getValue()));
     }
 });
 // -- Drop CSS file
@@ -126,8 +126,8 @@ document.getElementById("CSSeditor").addEventListener("drop", function (e) {
     let files = e.dataTransfer.files;
     let reader = new FileReader;
     reader.onload = function (e) {
-        CSSeditor.setValue(e.target.result)
-    }
+        CSSeditor.setValue(e.target.result);
+    };
     reader.readAsText(files[0]);
 });
 // - JS
@@ -139,7 +139,7 @@ JSeditor.commands.addCommand({
     name: "format",
     bindKey: { win: "Alt-Shift-F" },
     exec: function () {
-        JSeditor.setValue(js_beautify(JSeditor.getValue()))
+        JSeditor.setValue(js_beautify(JSeditor.getValue()));
     }
 });
 // -- Drop CSS file
@@ -151,8 +151,8 @@ document.getElementById("JSeditor").addEventListener("drop", function (e) {
     let files = e.dataTransfer.files;
     let reader = new FileReader;
     reader.onload = function (e) {
-        JSeditor.setValue(e.target.result)
-    }
+        JSeditor.setValue(e.target.result);
+    };
     reader.readAsText(files[0]);
 });
 // Resize
@@ -164,19 +164,19 @@ document.getElementById("resizeBar").addEventListener("mousedown", function (e) 
     isDrag = true;
     startX = e.x;
     startLeft = parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left);
-})
+});
 document.getElementById("resizeBar").addEventListener("mouseup", function (e) {
     isDrag = false;
-})
+});
 document.getElementById("codespaceContainer").addEventListener("mouseout", function (e) {
     isDrag = false;
-})
+});
 document.addEventListener("mousemove", function (e) {
     if (isDrag) {
         let dx = e.clientX - startX;
         let newPosition = startLeft + dx;
         if (newPosition <= -1) {
-            newPosition = -1
+            newPosition = -1;
         }
         if (newPosition >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17) {
             newPosition = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17;
@@ -185,7 +185,7 @@ document.addEventListener("mousemove", function (e) {
         document.getElementById("editors").style.width = newPosition + "px";
         document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(codespaceContainer).width) - newPosition - 17 + "px";
     }
-})
+});
 
 // responsive
 setInterval(function () {
@@ -196,7 +196,7 @@ setInterval(function () {
             document.getElementById("consolepanels").style.display = "revert";
         }
     }
-}, 20)
+}, 20);
 // Update code
 
 function runCode() {
@@ -207,8 +207,8 @@ function runCode() {
             html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
             html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
             html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
-            html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN)
-            document.getElementById("preview").srcdoc = html
+            html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN);
+            document.getElementById("preview").srcdoc = html;
         });
 }
 
@@ -221,12 +221,12 @@ setTimeout(function () {
                     document.getElementById("codeRunningMessage").style.display = "flex";
                     setTimeout(function () {
                         document.getElementById("codeRunningMessage").style.display = "none";
-                    }, 3000)
+                    }, 3000);
                 }
             }
         }
     });
-}, 500)
+}, 500);
 
 // console
 
@@ -238,7 +238,7 @@ window.addEventListener("message", function (e) {
             }
             let consoleLogMessage = document.createElement("div");
             consoleLogMessage.innerHTML = e.data.message;
-            consoleLogMessage.style = "padding-left:2px;width:fit-content;margin-left:2px;margin-top:1px;margin-bottom:2px;"
+            consoleLogMessage.style = "padding-left:2px;width:fit-content;margin-left:2px;margin-top:1px;margin-bottom:2px;";
             document.getElementById("console").appendChild(consoleLogMessage);
         } else if (e.data.type == "console.error") {
             if (e.data.message.toString().includes(IFRAMEACCESSTOKEN)) {
@@ -246,7 +246,7 @@ window.addEventListener("message", function (e) {
             }
             let consoleLogMessage = document.createElement("div");
             consoleLogMessage.innerHTML = "<span style=\"color:white;display:flex;align-items:center;justify-content:left;\"><img src=\"icons/errorSymbol.png\" style=\"width:12px;height:12px;pointer-events:none;\">&nbsp;" + e.data.message + "</span>";
-            consoleLogMessage.style = "padding-left:2px;width:90%;margin-left:2px;margin-top:1px;margin-bottom:2px;background-color:rgb(252, 167, 169);border-radius:2px;"
+            consoleLogMessage.style = "padding-left:2px;width:90%;margin-left:2px;margin-top:1px;margin-bottom:2px;background-color:rgb(252, 167, 169);border-radius:2px;";
             document.getElementById("console").appendChild(consoleLogMessage);
         } else if (e.data.type == "console.clear") {
             document.getElementById("console").innerHTML = "";
@@ -280,10 +280,10 @@ document.getElementById("consoleResizeBar").addEventListener("mousedown", functi
 });
 document.addEventListener("mouseup", function (e) {
     isConsoleResize = false;
-})
+});
 document.getElementById("previewArea").addEventListener("mouseout", function () {
     isConsoleResize = false;
-})
+});
 document.addEventListener("mousemove", function (e) {
     if (isConsoleResize) {
         let dy = e.y - startY;
@@ -306,7 +306,7 @@ document.getElementById("openOrCloseConsoleButton").addEventListener("click", fu
     setTimeout(function () {
         document.getElementById("consoleResizeBar").style.transition = "none";
         document.getElementById("console").style.transition = "none";
-    }, 510)
+    }, 510);
     if (isConsoleopened == false) {
         isConsoleopened = true;
         document.getElementById("consoleResizeBar").style.bottom = "120px";
@@ -344,13 +344,13 @@ document.getElementById("topBarExportBtn").addEventListener("click", function ()
         this.innerText = "Export";
         this.style.borderRadius = "5px";
     }
-})
+});
 document.getElementById("downloadZip").addEventListener("click", function () {
     if (HTMLeditor.getValue() && CSSeditor.getValue() && JSeditor.getValue()) {
         let zip = new JSZip();
         fetch("templates/downloadTemplate.html")
             .then(function (response) {
-                return response.text()
+                return response.text();
             })
             .then(function (html) {
                 html = html.replace("{{ HTML }}", HTMLeditor.getValue());
@@ -366,14 +366,14 @@ document.getElementById("downloadZip").addEventListener("click", function () {
                         downloadLink.href = URL.createObjectURL(content);
                         downloadLink.download = "codeproject.zip";
                         downloadLink.click(); URL.removeObjectURL();
-                    })
-            })
+                    });
+            });
 
 
     }
 });
 document.getElementById("downloadHTML").addEventListener("click", function () {
-    let blob = new Blob([HTMLeditor.getValue()])
+    let blob = new Blob([HTMLeditor.getValue()]);
     let downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(blob);
     downloadLink.download = "index.html";
@@ -381,7 +381,7 @@ document.getElementById("downloadHTML").addEventListener("click", function () {
     URL.removeObjectURL();
 });
 document.getElementById("downloadCSS").addEventListener("click", function () {
-    let blob = new Blob([CSSeditor.getValue()])
+    let blob = new Blob([CSSeditor.getValue()]);
     let downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(blob);
     downloadLink.download = "style.css";
@@ -389,7 +389,7 @@ document.getElementById("downloadCSS").addEventListener("click", function () {
     URL.removeObjectURL();
 });
 document.getElementById("downloadJavaScript").addEventListener("click", function () {
-    let blob = new Blob([JSeditor.getValue()])
+    let blob = new Blob([JSeditor.getValue()]);
     let downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(blob);
     downloadLink.download = "script.js";
@@ -413,18 +413,18 @@ document.getElementById("previewOption").addEventListener("click", function () {
 });
 // Maximize Editor Button
 document.getElementById("MaximizeEditorBtn").addEventListener("click", function () {
-    document.getElementById("resizeBar").style.left = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
-    document.getElementById("editors").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
-    document.getElementById("previewAreaWrapper").style.width = "0px"
+    document.getElementById("resizeBar").style.left = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+    document.getElementById("editors").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+    document.getElementById("previewAreaWrapper").style.width = "0px";
     if (isConsoleopened) {
         document.getElementById("openOrCloseConsoleButton").click();
     }
 });
 // Preview in fullscreen button
 document.getElementById("previewInFullscreen").addEventListener("click", function () {
-    document.getElementById("resizeBar").style.left = "-1px"
-    document.getElementById("editors").style.width = "0px"
-    document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px"
+    document.getElementById("resizeBar").style.left = "-1px";
+    document.getElementById("editors").style.width = "0px";
+    document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
 });
 
 // Go TO Fullscreen Editor
@@ -437,7 +437,7 @@ document.getElementById("WindowFullscreenBtn").addEventListener("click", functio
         this.innerText = "Go To Fullscreen Editor";
     }
 
-})
+});
 setInterval(function () {
     if (document.fullscreenElement) {
         document.getElementById("WindowFullscreenBtn").innerText = "Exit Fullscreen Editor";
@@ -470,31 +470,31 @@ document.getElementById("getJSLIB").addEventListener("click", function () {
     this.style.pointerEvents = "none";
     if (!isLibSearchOpen) {
         isLibSearchOpen = true;
-        document.getElementById("jsLibSideBar").style.transition = "1s"
+        document.getElementById("jsLibSideBar").style.transition = "1s";
         document.getElementById("jsLibSideBar").style.right = "0px";
-        this.innerText = "Close Library"
+        this.innerText = "Close Library";
     } else {
         isLibSearchOpen = false;
-        document.getElementById("jsLibSideBar").style.transition = "1s"
+        document.getElementById("jsLibSideBar").style.transition = "1s";
         document.getElementById("jsLibSideBar").style.right = "-400px";
-        this.innerText = "JS Library"
+        this.innerText = "JS Library";
     }
     setTimeout(function () {
         document.getElementById("jsLibSideBar").style.transition = "none";
         document.getElementById("getJSLIB").style.pointerEvents = "auto";
-    }, 1010)
+    }, 1010);
 
-})
+});
 document.getElementById("CDNJSsearchBar").addEventListener("submit", function (e) {
     e.preventDefault();
-    let searchKeyword = new FormData(document.getElementById("CDNJSsearchBar"))
+    let searchKeyword = new FormData(document.getElementById("CDNJSsearchBar"));
     fetch("https://api.cdnjs.com/libraries?search=" + searchKeyword.get("input") + "&fields=description,github")
         .then(function (response) {
-            return response.json()
+            return response.json();
         })
         .then(function (data) {
 
-            data = data.results
+            data = data.results;
             if (data.length >= 1) {
                 let allOldResult = document.getElementById("CDNJSsearchResultDsipalyContainer").querySelectorAll(".resultListObject,p,div,h1,h2,button");
                 for (let i = 0; i < allOldResult.length; i++) {
@@ -516,9 +516,9 @@ document.getElementById("CDNJSsearchBar").addEventListener("submit", function (e
                     let resultCodeCopyButton = document.createElement("div");
                     resultCodeCopyButton.innerText = "Copy";
                     resultCodeCopyButton.addEventListener("click", function () {
-                        navigator.clipboard.writeText(getScripTag(data[i].latest))
-                    })
-                    resultCodeCopyButton.className = "resultListObjectCodeContentCopyButton"
+                        navigator.clipboard.writeText(getScripTag(data[i].latest));
+                    });
+                    resultCodeCopyButton.className = "resultListObjectCodeContentCopyButton";
                     resultCodeContent.appendChild(resultCodeCopyButton);
 
                     /* Result dividing Line*/
@@ -537,16 +537,16 @@ document.getElementById("CDNJSsearchBar").addEventListener("submit", function (e
                     document.getElementById("CDNJSsearchResultDsipalyContainer").appendChild(ResultContainer);
                 }
             } else {
-                document.getElementById("CDNJSsearchResultDsipalyContainer").innerHTML = "<h1>Failed to search!</h1><br><p style=\"text-align:center;\">There has no result of <br>what you are searching!</p>"
+                document.getElementById("CDNJSsearchResultDsipalyContainer").innerHTML = "<h1>Failed to search!</h1><br><p style=\"text-align:center;\">There has no result of <br>what you are searching!</p>";
             }
-        })
+        });
 
 });
 function getScripTag(url) {
-    return "<script src=\"" + url + "\"></script>"
+    return "<script src=\"" + url + "\"></script>";
 }
 function getHTMLScripTag(url) {
-    return "&ltscript src=\"" + url + "\"&gt&lt/script&gt"
+    return "&ltscript src=\"" + url + "\"&gt&lt/script&gt";
 }
 // Shortcut guide
 let isShortcutGuideOpened = false;
@@ -563,7 +563,7 @@ document.getElementById("getShortcuts").addEventListener("click", function () {
         document.getElementById("shortcutsGuideSideBar").style.right = "-400px";
     };
     setTimeout(function () {
-        document.getElementById("shortcutsGuideSideBar").style.transition = "none"
+        document.getElementById("shortcutsGuideSideBar").style.transition = "none";
     }, 1005);
 });
 
@@ -571,7 +571,7 @@ document.getElementById("getShortcuts").addEventListener("click", function () {
 setInterval(function () {
     if (document.getElementById("darkmodeSwitch").value == 1) {
         document.getElementById("themeStylesheet").href = "darkMode.css";
-        let theme = "ace/theme/nord_dark"
+        let theme = "ace/theme/nord_dark";
         HTMLeditor.setTheme(theme);
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
@@ -580,7 +580,7 @@ setInterval(function () {
         nonSelectedTabsColor = "rgb(91, 90, 90)";
     } else {
         document.getElementById("themeStylesheet").href = "lightMode.css";
-        let theme = "ace/theme/chrome"
+        let theme = "ace/theme/chrome";
         HTMLeditor.setTheme(theme);
         CSSeditor.setTheme(theme);
         JSeditor.setTheme(theme);
@@ -598,5 +598,5 @@ document.getElementById("darkmodeSwitch").addEventListener("change", function ()
         } else if (parseFloat(document.getElementById("JSeditor").style.zIndex) == 4) {
             document.getElementById("jsEditorTab").click();
         }
-    }, 200)
-})
+    }, 200);
+});

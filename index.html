@@ -12,9 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.js"
         integrity="sha512-T2otaV2NuxAJAOCoj8ijyy+eAAadZlpvdLmakrIGVFbBkthgIFqLTXd+T8Z+S+kf4V7Ib5+6f6r4D4IdS9Ey4A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-css.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-html.js"></script>
+    <script src="asset/beautify.js"></script>
+    <script src="asset/beautify-css.js"></script>
+    <script src="asset/beautify-html.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.js"
         integrity="sha512-3FKAKNDHbfUwAgW45wNAvfgJDDdNoTi5PZWU7ak3Xm0X8u0LbDBWZEyPklRebTZ8r+p0M2KIJWDYZQjDPyYQEA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -61,7 +61,7 @@
         </div>
         <div id="previewAreaWrapper">
             <div id="previewArea">
-                <iframe id="preview"></iframe>
+                <iframe id="preview" sandbox="allow-scripts allow-forms" allowfullscreen></iframe>
                 <div id="consoleResizeBar">
                     <button id="openOrCloseConsoleButton">Open Console</button>
                     <div id="consolepanels">
@@ -72,7 +72,7 @@
                 <div id="consoleWrapper">
                     <div id="console"></div>
                     <div id="consoleInput" contenteditable spellcheck="false"></div>
-                    <div class="consoleInputArrow">&gt</div>
+                    <div class="consoleInputArrow">&gt;</div>
                 </div>
             </div>
         </div>
