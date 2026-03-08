@@ -209,10 +209,16 @@ body {
 
 #resizeBar div {
     background-color: lightgray;
-    width: 5px;
+    width: 34%;
     height: 90px;
-    border-radius: 5px;
+    border-radius: 100px;
     pointer-events: none;
+}
+
+#resizeBar:hover {
+    width: 30px;
+    height: calc(100% + 1px);
+    margin-left: -7px;
 }
 
 #previewAreaWrapper {
