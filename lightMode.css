@@ -187,7 +187,7 @@ body {
 
 /* Shortcut Guide */
 #shortcutsGuideSideBar {
-    background: none;
+    background-color: #dfdfdf;
 }
 
 #shortcutsGuideSideBar h1 {

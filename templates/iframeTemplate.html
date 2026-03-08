@@ -27,11 +27,23 @@
 
                 }
             }
-            window.parent.postMessage({
-                "type": "console.log",
-                "message": message,
-                "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
-            }, "*");
+            if (typeof message == "function") {
+                try {
+                    message = message.toString();
+                } catch {
+
+                }
+            }
+            try {
+                window.parent.postMessage({
+                    "type": "console.log",
+                    "message": message,
+                    "verifyID": document.querySelector("meta[name='iframeAccessToken']").content
+                }, "*");
+            } catch (e) {
+
+            }
+
         };
         console.error = function (message) {
             window.parent.postMessage({
