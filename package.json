@@ -11,10 +11,11 @@
     "url": "git+https://github.com/RichardLiuCode/codeeditor.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "Richard Liu",
   "type": "commonjs",
   "main": "script.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
