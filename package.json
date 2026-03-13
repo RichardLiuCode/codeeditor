@@ -15,12 +15,15 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
     "electron": "^41.0.1",
-    "electron-builder": "^26.8.1",
     "electron-packager": "^17.1.2"
-  }
+  },
+  "dependencies": {}
 }
