@@ -1,0 +1,627 @@
+// Prepare application when loaded
+window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("htmlEditorTab").click();
+    document.getElementById("resizeBar").style.left = window.innerWidth / 2 + "px";
+    document.getElementById("editors").style.width = window.innerWidth / 2 + "px";
+    document.getElementById("previewAreaWrapper").style.width = (window.innerWidth / 2) - 17 + "px";
+});
+window.addEventListener("resize", function () {
+    document.getElementById("resizeBar").style.left = window.innerWidth / 2 + "px";
+    document.getElementById("editors").style.width = window.innerWidth / 2 + "px";
+    document.getElementById("previewAreaWrapper").style.width = (window.innerWidth / 2) - 17 + "px";
+});
+fetch("templates/iframeTemplate.html")
+    .then(function (response) {
+        return response.text();
+    }).then(function (html) {
+        html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
+        html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
+        html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
+        html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN);
+        document.getElementById("preview").srcdoc = html;
+    });
+window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("consolepanels").style.display = "none";
+});
+if (localStorage.getItem("codeEditorDarkMode") == "on") {
+    document.getElementById("darkmodeSwitch").value = 1;
+} else {
+    document.getElementById("darkmodeSwitch").value = 0;
+}
+ace.require("ace/ext/language_tools");
+// - Iframe Token
+const GernerateTokenCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+let token = "";
+for (let i = 0; i < 5030; i++) {
+    token = token + GernerateTokenCharacters[Math.floor(Math.random() * GernerateTokenCharacters.length)];
+}
+const IFRAMEACCESSTOKEN = token;
+// Editor
+// - Tabs
+let selectedTabColor = "rgba(138, 136, 136, 1)";
+let nonSelectedTabsColor = "rgb(91, 90, 90)";
+if (document.getElementById("darkmodeSwitch").value == 1) {
+    selectedTabColor = "rgba(138, 136, 136, 1)";
+    nonSelectedTabsColor = "rgb(91, 90, 90)";
+} else {
+    selectedTabColor = "rgba(184, 185, 187, 1)";
+    nonSelectedTabsColor = "rgba(209, 208, 208, 1)";
+}
+document.getElementById("htmlEditorTab").addEventListener("click", function () {
+    this.style.backgroundColor = selectedTabColor;
+    document.getElementById("jsEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("cssEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("HTMLeditor").style.zIndex = 4;
+    document.getElementById("CSSeditor").style.zIndex = 3;
+    document.getElementById("JSeditor").style.zIndex = 2;
+});
+document.getElementById("cssEditorTab").addEventListener("click", function () {
+    this.style.backgroundColor = selectedTabColor;
+    document.getElementById("jsEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("htmlEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("CSSeditor").style.zIndex = 4;
+    document.getElementById("HTMLeditor").style.zIndex = 2;
+    document.getElementById("JSeditor").style.zIndex = 3;
+});
+document.getElementById("jsEditorTab").addEventListener("click", function () {
+    document.getElementById("htmlEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    document.getElementById("cssEditorTab").style.backgroundColor = nonSelectedTabsColor;
+    this.style.backgroundColor = selectedTabColor;
+    document.getElementById("JSeditor").style.zIndex = 4;
+    document.getElementById("CSSeditor").style.zIndex = 3;
+    document.getElementById("HTMLeditor").style.zIndex = 2;
+});
+// run code shortcut
+document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.key == "s") {
+        e.preventDefault();
+        localStorage.setItem("codeEditorHTMLcode", HTMLeditor.getValue());
+        localStorage.setItem("codeEditorCSScode", CSSeditor.getValue());
+        localStorage.setItem("codeEditorJScode", JSeditor.getValue());
+        runCode();
+    }
+});
+// - HTML
+const HTMLeditor = ace.edit("HTMLeditor");
+HTMLeditor.session.setMode("ace/mode/html");
+HTMLeditor.setFontSize(14);
+HTMLeditor.setReadOnly(false);
+HTMLeditor.commands.addCommand({
+    name: "format",
+    bindKey: { win: "Alt-Shift-F" },
+    exec: function () {
+        HTMLeditor.session.setValue(html_beautify(HTMLeditor.getValue()));
+    }
+});
+HTMLeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
+// -- Drop HTML file
+document.getElementById("HTMLeditor").addEventListener("dragover", function (e) {
+    e.preventDefault();
+});
+document.getElementById("HTMLeditor").addEventListener("drop", function (e) {
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    let reader = new FileReader;
+    reader.onload = function (e) {
+        HTMLeditor.setValue(e.target.result);
+    };
+    reader.readAsText(files[0]);
+});
+// - CSS
+const CSSeditor = ace.edit("CSSeditor");
+CSSeditor.session.setMode("ace/mode/css");
+CSSeditor.setReadOnly(false);
+CSSeditor.setFontSize(14);
+CSSeditor.commands.addCommand({
+    name: "format",
+    bindKey: { win: "Alt-Shift-F" },
+    exec: function () {
+        CSSeditor.session.setValue(css_beautify(CSSeditor.getValue()));
+    }
+});
+CSSeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
+// -- Drop CSS file
+document.getElementById("CSSeditor").addEventListener("dragover", function (e) {
+    e.preventDefault();
+});
+document.getElementById("CSSeditor").addEventListener("drop", function (e) {
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    let reader = new FileReader;
+    reader.onload = function (e) {
+        CSSeditor.setValue(e.target.result);
+    };
+    reader.readAsText(files[0]);
+});
+// - JS
+const JSeditor = ace.edit("JSeditor");
+JSeditor.session.setMode("ace/mode/javascript");
+JSeditor.setReadOnly(false);
+JSeditor.setFontSize(14);
+JSeditor.commands.addCommand({
+    name: "format",
+    bindKey: { win: "Alt-Shift-F" },
+    exec: function () {
+        JSeditor.session.setValue(js_beautify(JSeditor.getValue()));
+    }
+});
+JSeditor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
+// -- Drop JS file
+document.getElementById("JSeditor").addEventListener("dragover", function (e) {
+    e.preventDefault();
+});
+document.getElementById("JSeditor").addEventListener("drop", function (e) {
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    let reader = new FileReader;
+    reader.onload = function (e) {
+        JSeditor.setValue(e.target.result);
+    };
+    reader.readAsText(files[0]);
+});
+// Resize
+let isDrag = false;
+let startX;
+let startLeft;
+
+document.getElementById("resizeBar").addEventListener("mousedown", function (e) {
+    isDrag = true;
+    startX = e.x;
+    startLeft = parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left);
+    HTMLeditor.setReadOnly(true);
+    CSSeditor.setReadOnly(true);
+    JSeditor.setReadOnly(true);
+});
+document.getElementById("resizeBar").addEventListener("mouseup", function (e) {
+    isDrag = false;
+    HTMLeditor.setReadOnly(false);
+    CSSeditor.setReadOnly(false);
+    JSeditor.setReadOnly(false);
+});
+document.getElementById("codespaceContainer").addEventListener("mouseout", function (e) {
+    isDrag = false;
+    HTMLeditor.setReadOnly(false);
+    CSSeditor.setReadOnly(false);
+    JSeditor.setReadOnly(false);
+});
+document.addEventListener("mousemove", function (e) {
+    if (isDrag) {
+        let dx = e.clientX - startX;
+        let newPosition = startLeft + dx;
+        if (newPosition <= -1) {
+            newPosition = -1;
+        }
+        if (newPosition >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17) {
+            newPosition = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17;
+        }
+        document.getElementById("resizeBar").style.left = newPosition + "px";
+        document.getElementById("editors").style.width = newPosition + "px";
+        document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(codespaceContainer).width) - newPosition - 17 + "px";
+        HTMLeditor.setReadOnly(true);
+        CSSeditor.setReadOnly(true);
+        JSeditor.setReadOnly(true);
+    }
+});
+
+// responsive
+setInterval(function () {
+    if (parseFloat(window.getComputedStyle(document.getElementById("resizeBar")).left) >= parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 332) {
+        document.getElementById("consolepanels").style.display = "none";
+    } else {
+        if (isConsoleopened) {
+            document.getElementById("consolepanels").style.display = "revert";
+        }
+    }
+}, 20);
+// Update code
+
+function runCode() {
+    fetch("templates/iframeTemplate.html")
+        .then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            html = html.replace("<!--|HTML|-->", HTMLeditor.getValue() || "");
+            html = html.replace("/*--|CSS|--*/", CSSeditor.getValue() || "");
+            html = html.replace("/*--|JavaScript|--*/", JSeditor.getValue() || "");
+            html = html.replace("--|AccessToken|--", IFRAMEACCESSTOKEN);
+            document.getElementById("preview").srcdoc = html;
+        });
+}
+
+// Display Message that show code is running
+setTimeout(function () {
+    window.addEventListener("message", function (e) {
+        if (e.data.verifyID == IFRAMEACCESSTOKEN && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
+            if (e.data.type == "request") {
+                if (e.data.loaded) {
+                    document.getElementById("codeRunningMessage").style.display = "flex";
+                    setTimeout(function () {
+                        document.getElementById("codeRunningMessage").style.display = "none";
+                    }, 3000);
+                }
+            }
+        }
+    });
+}, 500);
+
+// console
+
+window.addEventListener("message", function (e) {
+    if (e.data.verifyID == IFRAMEACCESSTOKEN && (e.origin.includes("http://127.0.0.1:5500") || e.origin.includes("https://richardliucode.github.io"))) {
+        if (e.data.type == "console.log") {
+            if (e.data.message.toString().includes(IFRAMEACCESSTOKEN)) {
+                e.data.message = e.data.message.toString().replace(IFRAMEACCESSTOKEN, undefined);
+            }
+            let consoleLogMessage = document.createElement("div");
+            consoleLogMessage.innerHTML = e.data.message;
+            consoleLogMessage.style = "padding-left:2px;width:fit-content;margin-left:2px;margin-top:1px;margin-bottom:2px;";
+            document.getElementById("console").appendChild(consoleLogMessage);
+        } else if (e.data.type == "console.error") {
+            if (e.data.message.toString().includes(IFRAMEACCESSTOKEN)) {
+                e.data.message = e.data.message.toString().replace(IFRAMEACCESSTOKEN, undefined);
+            }
+            let consoleLogMessage = document.createElement("div");
+            consoleLogMessage.innerHTML = "<span style=\"color:white;display:flex;align-items:center;justify-content:left;\"><img src=\"icons/errorSymbol.png\" style=\"width:12px;height:12px;pointer-events:none;\">&nbsp;" + e.data.message + "</span>";
+            consoleLogMessage.style = "padding-left:2px;width:90%;margin-left:2px;margin-top:1px;margin-bottom:2px;background-color:rgb(252, 167, 169);border-radius:2px;";
+            document.getElementById("console").appendChild(consoleLogMessage);
+        } else if (e.data.type == "console.clear") {
+            document.getElementById("console").innerHTML = "";
+        }
+    }
+});
+
+// Console Input 
+document.getElementById("consoleInput").addEventListener("keydown", function (e) {
+    if (e.key == "Enter") {
+        e.preventDefault();
+        document.getElementById("preview").contentWindow.postMessage({
+            "type": "consoleInput",
+            "verifyID": IFRAMEACCESSTOKEN,
+            "content": document.getElementById("consoleInput").innerText
+        }, "*");
+        document.getElementById("consoleInput").innerText = "";
+    }
+});
+
+// Console Resize bar
+let isConsoleResize = false;
+let startY;
+let startBottom;
+document.getElementById("consoleResizeBar").addEventListener("mousedown", function (e) {
+    if (isConsoleopened) {
+        startY = e.y;
+        startBottom = parseFloat(window.getComputedStyle(document.getElementById("consoleResizeBar")).bottom);
+        isConsoleResize = true;
+    }
+});
+document.addEventListener("mouseup", function (e) {
+    isConsoleResize = false;
+});
+document.getElementById("previewArea").addEventListener("mouseout", function () {
+    isConsoleResize = false;
+});
+document.addEventListener("mousemove", function (e) {
+    if (isConsoleResize) {
+        let dy = e.y - startY;
+        let newPosition = startBottom - dy;
+        if (newPosition >= parseFloat(window.getComputedStyle(document.getElementById("previewArea")).height) - 26) {
+            newPosition = parseFloat(window.getComputedStyle(document.getElementById("previewArea")).height) - 26;
+        }
+        if (newPosition <= 80) {
+            newPosition = 80;
+        }
+        document.getElementById("consoleResizeBar").style.bottom = newPosition + "px";
+        document.getElementById("console").style.height = newPosition - 20 + "px";
+    }
+});
+// open and close console
+let isConsoleopened = false;
+document.getElementById("openOrCloseConsoleButton").addEventListener("click", function () {
+    document.getElementById("consoleResizeBar").style.transition = "0.5s";
+    document.getElementById("console").style.transition = "0.5s";
+    setTimeout(function () {
+        document.getElementById("consoleResizeBar").style.transition = "none";
+        document.getElementById("console").style.transition = "none";
+    }, 510);
+    if (isConsoleopened == false) {
+        isConsoleopened = true;
+        document.getElementById("consoleResizeBar").style.bottom = "120px";
+        document.getElementById("console").style.height = "100px";
+        document.getElementById("consolepanels").style.display = "revert";
+        document.getElementById("openOrCloseConsoleButton").innerText = "Close Console";
+    } else {
+        isConsoleopened = false;
+        document.getElementById("consoleResizeBar").style.bottom = "-1px";
+        document.getElementById("console").style.height = "0px";
+        document.getElementById("consolepanels").style.display = "none";
+        document.getElementById("openOrCloseConsoleButton").innerText = "Open Console";
+    }
+});
+// Clear console button
+document.getElementById("clearConsoleButton").addEventListener("click", function () {
+    document.getElementById("preview").contentWindow.postMessage({
+        "type": "consoleInput",
+        "verifyID": IFRAMEACCESSTOKEN,
+        "content": "console.clear()"
+    }, "*");
+});
+
+// Export Project
+let isExportMenuDisplay = false;
+document.getElementById("topBarExportBtn").addEventListener("click", function () {
+    if (!isExportMenuDisplay) {
+        isExportMenuDisplay = true;
+        document.getElementById("exportMenu").style.display = "revert";
+        this.innerText = "Calcel";
+        this.style.borderRadius = "5px 5px 0px 0px";
+    } else {
+        isExportMenuDisplay = false;
+        document.getElementById("exportMenu").style.display = "none";
+        this.innerText = "Export";
+        this.style.borderRadius = "5px";
+    }
+});
+document.getElementById("downloadZip").addEventListener("click", function () {
+    if (HTMLeditor.getValue() && CSSeditor.getValue() && JSeditor.getValue()) {
+        let zip = new JSZip();
+        fetch("templates/downloadTemplate.html")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (html) {
+                html = html.replace("{{ HTML }}", HTMLeditor.getValue());
+                html = html.replace("{{ Style }}", "<link rel=\"stylesheet\" href=\"style.css\">");
+                html = html.replace("{{ Script }}", "<script src=\"script.js\"></script>");
+                zip.file("index.html", html);
+                zip.file("style.css", CSSeditor.getValue());
+
+                zip.file("script.js", JSeditor.getValue());
+                zip.generateAsync({ "type": "blob" })
+                    .then(function (content) {
+                        let downloadLink = document.createElement("a");
+                        downloadLink.href = URL.createObjectURL(content);
+                        downloadLink.download = "codeproject.zip";
+                        downloadLink.click(); URL.removeObjectURL();
+                    });
+            });
+
+
+    }
+});
+document.getElementById("downloadHTML").addEventListener("click", function () {
+    let blob = new Blob([HTMLeditor.getValue()]);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "index.html";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
+document.getElementById("downloadCSS").addEventListener("click", function () {
+    let blob = new Blob([CSSeditor.getValue()]);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "style.css";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
+document.getElementById("downloadJavaScript").addEventListener("click", function () {
+    let blob = new Blob([JSeditor.getValue()]);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "script.js";
+    downloadLink.click();
+    URL.removeObjectURL();
+});
+// Preview
+let isPreviewMenuOn = false;
+document.getElementById("previewOption").addEventListener("click", function () {
+    if (!isPreviewMenuOn) {
+        isPreviewMenuOn = true;
+        document.getElementById("previewMenu").style.display = "revert";
+        this.innerText = "Calcel";
+        this.style.borderRadius = "5px 5px 0px 0px";
+    } else {
+        isPreviewMenuOn = false;
+        document.getElementById("previewMenu").style.display = "none";
+        this.innerText = "Preview";
+        this.style.borderRadius = "5px";
+    }
+});
+// Maximize Editor Button
+document.getElementById("MaximizeEditorBtn").addEventListener("click", function () {
+    document.getElementById("resizeBar").style.left = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+    document.getElementById("editors").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+    document.getElementById("previewAreaWrapper").style.width = "0px";
+    if (isConsoleopened) {
+        document.getElementById("openOrCloseConsoleButton").click();
+    }
+});
+// Preview in fullscreen button
+document.getElementById("previewInFullscreen").addEventListener("click", function () {
+    document.getElementById("resizeBar").style.left = "-1px";
+    document.getElementById("editors").style.width = "0px";
+    document.getElementById("previewAreaWrapper").style.width = parseFloat(window.getComputedStyle(document.getElementById("codespaceContainer")).width) - 17 + "px";
+});
+
+// Go TO Fullscreen Editor
+document.getElementById("WindowFullscreenBtn").addEventListener("click", function () {
+    if (!document.fullscreenElement) {
+        document.body.requestFullscreen();
+        this.innerText = "Exit Fullscreen Editor";
+    } else {
+        document.exitFullscreen();
+        this.innerText = "Go To Fullscreen Editor";
+    }
+
+});
+setInterval(function () {
+    if (document.fullscreenElement) {
+        document.getElementById("WindowFullscreenBtn").innerText = "Exit Fullscreen Editor";
+    } else {
+        document.getElementById("WindowFullscreenBtn").innerText = "Go To Fullscreen Editor";
+    }
+
+}, 700);
+
+// autosave
+HTMLeditor.setValue("");
+CSSeditor.setValue("");
+JSeditor.setValue("");
+HTMLeditor.insert(localStorage.getItem("codeEditorHTMLcode") || "");
+CSSeditor.insert(localStorage.getItem("codeEditorCSScode") || "");
+JSeditor.insert(localStorage.getItem("codeEditorJScode") || "");
+HTMLeditor.on("change", function () {
+    localStorage.setItem("codeEditorHTMLcode", HTMLeditor.getValue());
+});
+CSSeditor.on("change", function () {
+    localStorage.setItem("codeEditorCSScode", CSSeditor.getValue());
+});
+JSeditor.on("change", function () {
+    localStorage.setItem("codeEditorJScode", JSeditor.getValue());
+});
+
+// JS lib
+let isLibSearchOpen = false;
+document.getElementById("getJSLIB").addEventListener("click", function () {
+    this.style.pointerEvents = "none";
+    if (!isLibSearchOpen) {
+        isLibSearchOpen = true;
+        document.getElementById("jsLibSideBar").style.transition = "1s";
+        document.getElementById("jsLibSideBar").style.right = "0px";
+        this.innerText = "Close Library";
+    } else {
+        isLibSearchOpen = false;
+        document.getElementById("jsLibSideBar").style.transition = "1s";
+        document.getElementById("jsLibSideBar").style.right = "-400px";
+        this.innerText = "JS Library";
+    }
+    setTimeout(function () {
+        document.getElementById("jsLibSideBar").style.transition = "none";
+        document.getElementById("getJSLIB").style.pointerEvents = "auto";
+    }, 1010);
+
+});
+document.getElementById("CDNJSsearchBar").addEventListener("submit", function (e) {
+    e.preventDefault();
+    let searchKeyword = new FormData(document.getElementById("CDNJSsearchBar"));
+    fetch("https://api.cdnjs.com/libraries?search=" + searchKeyword.get("input") + "&fields=description,github")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+
+            data = data.results;
+            if (data.length >= 1) {
+                let allOldResult = document.getElementById("CDNJSsearchResultDsipalyContainer").querySelectorAll(".resultListObject,p,div,h1,h2,button");
+                for (let i = 0; i < allOldResult.length; i++) {
+                    allOldResult[i].remove();
+                }
+                for (let i = 0; i < data.length; i++) {
+                    let ResultContainer = document.createElement("div");
+                    ResultContainer.className = "resultListObject";
+                    /* Result title */
+                    let ResultTitle = document.createElement("p");
+                    ResultTitle.innerHTML = "<span style=\"font-size:22px;\">" + data[i].name + "</span>" + "<br>" + "<span style=\"font-size:16px;\">" + data[i].description + "</span>" + "<br>" + "<a style=\"color:blue;font-size:14px;text-decoration:underline;\" href=\"https://github.com/" + data[i].github.user + "/" + data[i].github.repo + "#readme\" target=\"_blank\">Read Document</a>";
+                    ResultContainer.appendChild(ResultTitle);
+
+                    /* Result Code Content*/
+                    let resultCodeContent = document.createElement("div");
+                    resultCodeContent.className = "resultListObjectCodeContent";
+
+                    /* Result Copy Code button */
+                    let resultCodeCopyButton = document.createElement("div");
+                    resultCodeCopyButton.innerText = "Copy";
+                    resultCodeCopyButton.addEventListener("click", function () {
+                        navigator.clipboard.writeText(getScripTag(data[i].latest));
+                    });
+                    resultCodeCopyButton.className = "resultListObjectCodeContentCopyButton";
+                    resultCodeContent.appendChild(resultCodeCopyButton);
+
+                    /* Result dividing Line*/
+                    let resultDividingLine = document.createElement("hr");
+                    resultDividingLine.className = "resultListObjectDividingLine";
+                    resultCodeContent.appendChild(resultDividingLine);
+
+
+                    /* Result Content Text*/
+                    let ResultContentText = document.createElement("span");
+                    ResultContentText.innerText = getScripTag(data[i].latest);
+
+                    ResultContainer.appendChild(resultCodeContent);
+                    resultCodeContent.appendChild(ResultContentText);
+
+                    document.getElementById("CDNJSsearchResultDsipalyContainer").appendChild(ResultContainer);
+                }
+            } else {
+                document.getElementById("CDNJSsearchResultDsipalyContainer").innerHTML = "<h1>Failed to search!</h1><br><p style=\"text-align:center;\">There has no result of <br>what you are searching!</p>";
+            }
+        });
+
+});
+function getScripTag(url) {
+    return "<script src=\"" + url + "\"></script>";
+}
+function getHTMLScripTag(url) {
+    return "&ltscript src=\"" + url + "\"&gt&lt/script&gt";
+}
+// Shortcut guide
+let isShortcutGuideOpened = false;
+document.getElementById("getShortcuts").addEventListener("click", function () {
+    if (!isShortcutGuideOpened) {
+        isShortcutGuideOpened = true;
+        this.innerText = "Close guide";
+        document.getElementById("shortcutsGuideSideBar").style.transition = "1s";
+        document.getElementById("shortcutsGuideSideBar").style.right = "0px";
+    } else {
+        isShortcutGuideOpened = false;
+        this.innerText = "Shortcuts";
+        document.getElementById("shortcutsGuideSideBar").style.transition = "1s";
+        document.getElementById("shortcutsGuideSideBar").style.right = "-400px";
+    };
+    setTimeout(function () {
+        document.getElementById("shortcutsGuideSideBar").style.transition = "none";
+    }, 1005);
+});
+
+// Darkmode switch
+setInterval(function () {
+    if (document.getElementById("darkmodeSwitch").value == 1) {
+        document.getElementById("themeStylesheet").href = "darkMode.css";
+        let theme = "ace/theme/nord_dark";
+        HTMLeditor.setTheme(theme);
+        CSSeditor.setTheme(theme);
+        JSeditor.setTheme(theme);
+        localStorage.setItem("codeEditorDarkMode", "on");
+        selectedTabColor = "rgba(138, 136, 136, 1)";
+        nonSelectedTabsColor = "rgb(91, 90, 90)";
+    } else {
+        document.getElementById("themeStylesheet").href = "lightMode.css";
+        let theme = "ace/theme/chrome";
+        HTMLeditor.setTheme(theme);
+        CSSeditor.setTheme(theme);
+        JSeditor.setTheme(theme);
+        localStorage.setItem("codeEditorDarkMode", "off");
+        selectedTabColor = "rgba(184, 185, 187, 1)";
+        nonSelectedTabsColor = "rgba(209, 208, 208, 1)";
+    }
+}, 300);
+document.getElementById("darkmodeSwitch").addEventListener("change", function () {
+    setTimeout(function () {
+        if (parseFloat(document.getElementById("HTMLeditor").style.zIndex) == 4) {
+            document.getElementById("htmlEditorTab").click();
+        } else if (parseFloat(document.getElementById("CSSeditor").style.zIndex) == 4) {
+            document.getElementById("cssEditorTab").click();
+        } else if (parseFloat(document.getElementById("JSeditor").style.zIndex) == 4) {
+            document.getElementById("jsEditorTab").click();
+        }
+    }, 200);
+});

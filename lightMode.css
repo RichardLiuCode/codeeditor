@@ -1,0 +1,215 @@
+/* This is the css that contain darkmode colors */
+
+html,
+body {
+    background-color: white;
+}
+
+.topBar {
+    background-color: rgb(226, 223, 223);
+}
+
+.torBarElementsWrapper button {
+    background-color: white;
+    border-color: black;
+    color: black;
+}
+
+
+.torBarElementsWrapper button:hover {
+    background-color: rgba(239, 237, 237, 0.874);
+}
+
+.torBarElementsWrapper button:active {
+    background-color: rgba(216, 215, 215, 0.694);
+}
+
+.topBarMenu {
+    background-color: white;
+    border-color: black;
+}
+
+.topBarMenu button {
+    background-color: rgb(236, 233, 233);
+    border-color: black;
+}
+
+
+#exportMenu hr {
+    background-color: black;
+}
+
+.darkmodeOption {
+    color: black;
+}
+
+#codespaceContainer {
+    border-color: gray;
+}
+
+#htmlEditorTab,
+#cssEditorTab,
+#jsEditorTab {
+    background-color: rgb(211, 210, 210);
+    color: rgb(62, 62, 62);
+
+}
+
+.SelectedEditorTab {
+    background-color: red;
+}
+
+#resizeBar {
+    background-color: aliceblue;
+    border-color: black;
+}
+
+#resizeBar div {
+    background-color: lightgray;
+}
+
+#previewAreaWrapper {
+    background-color: white;
+}
+
+#console {
+    background-color: white;
+    color: black;
+}
+
+#consoleInput {
+    background-color: white;
+    color: black;
+}
+
+.consoleInputArrow {
+    background-color: white;
+    color: black;
+}
+
+#consoleResizeBar {
+    background-color: aliceblue;
+    border-color: black;
+}
+
+.consoleResizeBarHandle {
+    background-color: lightgray;
+}
+
+#openOrCloseConsoleButton {
+    background-color: white;
+}
+
+#clearConsoleButton {
+    background-color: white;
+}
+
+#codeRunningMessage {
+    background-color: rgb(2, 242, 2);
+    color: white;
+    box-shadow: 0 0 2px 2px lightgray;
+}
+
+/* Search JS Library*/
+
+#jsLibSideBar {
+    background-color: rgb(223, 223, 223);
+}
+
+#jsLibSideBar h1 {
+    color: black;
+}
+
+#jsLibSideBar p {
+    color: black;
+}
+
+#jsLibSideBar a {
+    color: blue;
+}
+
+#CDNJSsearchBar .CNDJSSEARCHBARinput {
+    background-color: white;
+    color: black;
+    border-color: lightgray;
+}
+
+#CDNJSsearchBar .CNDJSSEARCHBARinput:focus {
+    border-color: blue;
+}
+
+#CDNJSsearchBar .CNDJSSEARCHBARsub {
+    border-color: lightgray;
+    background-color: rgb(243, 242, 242);
+    color: gray;
+}
+
+#CDNJSsearchResultDsipalyContainer {
+    background-color: rgb(224, 229, 234);
+    border-color: lightgray;
+}
+
+#CDNJSsearchResultDsipalyContainer::-webkit-scrollbar {
+    background-color: white;
+}
+
+#CDNJSsearchResultDsipalyContainer::-webkit-scrollbar-thumb {
+    background-color: rgb(214, 219, 223);
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObject {
+    background-color: white;
+    color: black;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContent {
+    background-color: lightgray;
+    border-color: gray;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton {
+    background-color: rgb(199, 198, 198);
+    color: black;
+    border-color: gray;
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:hover {
+    background-color: rgb(186, 184, 184);
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectCodeContentCopyButton:active {
+    background-color: rgba(209, 206, 206, 0.879);
+}
+
+#CDNJSsearchResultDsipalyContainer .resultListObjectDividingLine {
+    background-color: black;
+}
+
+/* Shortcut Guide */
+#shortcutsGuideSideBar {
+    background-color: #dfdfdf;
+}
+
+#shortcutsGuideSideBar h1 {
+    color: black;
+}
+
+#shortcutsGuideSideBar li {
+    color: black;
+}
+
+/* Editor scrollbar*/
+
+.ace_scrollbar::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 0px;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb {
+    background: #d3d2d2;
+    border-radius: 0px;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c2c1c1;
+}
